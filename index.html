@@ -4,37 +4,43 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Coffee Recipes</title>
-  <!-- TailwindCSS CDN -->
+  <!-- External Dependencies -->
+  <!-- TailwindCSS for styling -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- AlpineJS CDN -->
+  <!-- AlpineJS for reactivity and interactivity -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <!-- Motion One CDN -->
+  <!-- Motion One for smooth animations -->
   <script src="https://unpkg.com/@motionone/dom/dist/motion.min.js"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col items-center p-4">
+  <!-- Header Section -->
   <header class="w-full max-w-xl mx-auto py-8">
     <h1 class="text-5xl font-bold text-center text-brown-900">Coffee Recipes</h1>
   </header>
+
+  <!-- Main Content Section -->
   <main class="w-full max-w-xl mx-auto" x-data="coffeeRecipes()">
-    <div class="flex flex-wrap justify-center gap-4 mb-8">
+    <!-- Recipe Navigation Buttons -->
+    <div class="flex flex-col sm:flex-row bg-gray-100 p-1 rounded-2xl shadow-inner max-w-full sm:max-w-fit mx-auto gap-2 sm:gap-0">
+      <!-- On mobile, buttons stack vertically and are full width; on sm+ they are inline -->
       <template x-for="(label, idx) in buttons" :key="label">
         <button
-  @click="showRecipe(idx)"
-  class="px-5 py-2 rounded-full font-semibold shadow transition focus:outline-none text-brown-800"
-  :class="{
-    'border-b-2 border-gray-700': activeRecipe === idx,
-    'bg-white': activeRecipe !== idx
-  }"
->
-  <span x-text="label"></span>
-</button>
-
+          @click="showRecipe(idx)"
+          class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-semibold transition-all duration-200 focus:outline-none text-base sm:text-lg"
+          :class="{
+            'bg-white text-gray-900 shadow-sm': activeRecipe === idx,
+            'text-gray-600 hover:text-gray-800': activeRecipe !== idx
+          }"
+        >
           <span x-text="label"></span>
         </button>
       </template>
     </div>
-    <div class="relative min-h-[300px]">
+
+    <!-- Recipe Content Container -->
+    <div class="relative min-h-[300px] mt-4">
       <template x-for="(recipe, idx) in recipes" :key="recipe.title">
+        <!-- Individual Recipe Card -->
         <section
           x-show="activeRecipe === idx"
           x-transition:enter="transition ease-out duration-500"
@@ -43,36 +49,53 @@
           x-transition:leave="transition ease-in duration-300"
           x-transition:leave-start="opacity-100 translate-y-0"
           x-transition:leave-end="opacity-0 translate-y-8"
-          class="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-4 mx-auto"
+          class="bg-white rounded-xl shadow-lg p-4 md:p-6 flex flex-col gap-6 md:gap-16 mx-auto"
           style="display: none;"
           @transitionend.window="handleMotion($el, activeRecipe === idx)"
         >
-          <h2 class="text-2xl font-bold text-brown-900 mb-2" x-text="recipe.title"></h2>
-          <div>
-            <h3 class="font-semibold text-brown-700 mb-1">Ingredients:</h3>
-            <ul class="list-disc list-inside text-brown-800">
-              <template x-for="item in recipe.ingredients" :key="item">
-                <li x-text="item"></li>
-              </template>
-            </ul>
-          </div>
-          <div>
-            <h3 class="font-semibold text-brown-700 mb-1">Instructions:</h3>
-            <ol class="list-decimal list-inside text-brown-800 space-y-1">
-              <template x-for="step in recipe.instructions" :key="step">
-                <li x-text="step"></li>
-              </template>
-            </ol>
+          <!-- Two-column layout for recipe content and image -->
+          <div class="flex flex-col md:flex-row gap-6 md:gap-16">
+            <!-- Left column: Recipe details -->
+            <div class="flex-1">
+              <h2 class="text-xl md:text-2xl font-bold text-brown-900 mb-2" x-text="recipe.title"></h2>
+              <!-- Ingredients section -->
+              <div>
+                <h3 class="font-semibold text-brown-700 mb-1">Ingredients:</h3>
+                <ul class="list-disc list-inside text-brown-800 text-sm md:text-base">
+                  <template x-for="item in recipe.ingredients" :key="item">
+                    <li x-text="item"></li>
+                  </template>
+                </ul>
+              </div>
+              <!-- Instructions section -->
+              <div class="mt-2">
+                <h3 class="font-semibold text-brown-700 mb-1">Instructions:</h3>
+                <ol class="list-decimal list-inside text-brown-800 space-y-1 text-sm md:text-base">
+                  <template x-for="step in recipe.instructions" :key="step">
+                    <li x-text="step"></li>
+                  </template>
+                </ol>
+              </div>
+            </div>
+            <!-- Right column: Recipe image (below text on mobile, right on md+) -->
+            <div class="flex-1 flex items-center justify-center mt-4 md:mt-0">
+              <img :src="recipe.image" :alt="recipe.title" class="rounded-lg shadow-md w-full max-w-xs md:max-w-full h-auto object-cover">
+            </div>
           </div>
         </section>
       </template>
     </div>
   </main>
+
+  <!-- Alpine.js Component -->
   <script>
     function coffeeRecipes() {
       return {
-        buttons: ['French Press', 'Pour Over', 'Espresso', 'Cold Brew'],
+        // Navigation buttons labels
+        buttons: ['French Press', 'Pour Over', 'Espresso', 'Cold Brew', 'Aeropress'],
+        // Currently active recipe index
         activeRecipe: 0,
+        // Recipe data array containing all coffee recipes
         recipes: [
           {
             title: 'French Press',
@@ -88,7 +111,8 @@
               'Place the plunger on top and let steep for 4 minutes.',
               'Slowly press the plunger down.',
               'Serve and enjoy!'
-            ]
+            ],
+            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
           },
           {
             title: 'Pour Over',
@@ -104,7 +128,8 @@
               'Pour a small amount of water to bloom for 30 seconds.',
               'Slowly pour remaining water in circles over 2-3 minutes.',
               'Let drain, then serve.'
-            ]
+            ],
+            image: 'https://images.unsplash.com/photo-1599639668273-1846e1e49c8a?w=500&auto=format&fit=crop&q=60'
           },
           {
             title: 'Espresso',
@@ -118,7 +143,8 @@
               'Lock portafilter into machine.',
               'Start extraction (25-30 seconds for a double shot).',
               'Serve immediately.'
-            ]
+            ],
+            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
           },
           {
             title: 'Cold Brew',
@@ -134,33 +160,56 @@
               'Cover and steep in fridge for 12-18 hours.',
               'Strain concentrate through filter.',
               'Serve over ice, dilute as desired.'
-            ]
+            ],
+            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
+          },
+          {
+            title: 'Aeropress',
+            ingredients: [
+              '15g medium-fine ground coffee',
+              '200ml hot water (80-85°C)',
+              'Aeropress',
+              'Filter paper',
+              'Stirrer',
+            ],
+            instructions: [
+              'Place filter in cap and rinse with hot water.',
+              'Add coffee grounds to chamber.',
+              'Pour in hot water and stir for 10 seconds.',
+              'Insert plunger and let steep for 1 minute.',
+              'Press down slowly and steadily.',
+              'Serve and enjoy!'
+            ],
+            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
           }
         ],
+        // Method to switch between recipes
         showRecipe(idx) {
           this.activeRecipe = idx;
         },
+        // Animation handler for smooth transitions
         handleMotion(el, isActive) {
-  if (isActive) {
-    window.motion.animate(
-      el,
-      { opacity: [0, 1], transform: ['translateY(32px)', 'translateY(0)'] },
-      { duration: 0.8, easing: 'easeOutExpo' } // Increased duration and a smoother easing
-    );
-  }
-}
-
+          if (isActive) {
+            window.motion.animate(
+              el,
+              { opacity: [0, 1], transform: ['translateY(32px)', 'translateY(0)'] },
+              { duration: 0.8, easing: 'easeOutExpo' }
+            );
+          }
+        }
       }
     }
   </script>
+
+  <!-- Custom Styles -->
   <style>
-    /* Custom brown color for coffee theme */
-    .text-brown-900 { color: #4B2E19; }
-    .text-brown-800 { color: #6F4E37; }
-    .text-brown-700 { color: #8B5C2A; }
-    .bg-brown-800 { background-color: #6F4E37; }
-    .bg-brown-100 { background-color: #EDE6E0; }
-    .focus\:ring-brown-400:focus { box-shadow: 0 0 0 2px #BFA18F; }
+    /* Custom brown color palette for coffee theme */
+    .text-brown-900 { color: #4B2E19; } /* Darkest brown for headings */
+    .text-brown-800 { color: #6F4E37; } /* Medium brown for text */
+    .text-brown-700 { color: #8B5C2A; } /* Lighter brown for subheadings */
+    .bg-brown-800 { background-color: #6F4E37; } /* Background brown */
+    .bg-brown-100 { background-color: #EDE6E0; } /* Light brown background */
+    .focus\:ring-brown-400:focus { box-shadow: 0 0 0 2px #BFA18F; } /* Focus ring color */
   </style>
 </body>
 </html>
