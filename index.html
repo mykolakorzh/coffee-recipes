@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Recipes</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- AlpineJS CDN -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Motion One CDN -->
+  <script src="https://unpkg.com/@motionone/dom/dist/motion.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center p-4">
+  <header class="w-full max-w-xl mx-auto py-8">
+    <h1 class="text-5xl font-bold text-center text-brown-900">Coffee Recipes</h1>
+  </header>
+  <main class="w-full max-w-xl mx-auto" x-data="coffeeRecipes()">
+    <div class="flex flex-wrap justify-center gap-4 mb-8">
+      <template x-for="(label, idx) in buttons" :key="label">
+        <button
+  @click="showRecipe(idx)"
+  class="px-5 py-2 rounded-full font-semibold shadow transition focus:outline-none text-brown-800"
+  :class="{
+    'border-b-2 border-gray-700': activeRecipe === idx,
+    'bg-white': activeRecipe !== idx
+  }"
+>
+  <span x-text="label"></span>
+</button>
+
+          <span x-text="label"></span>
+        </button>
+      </template>
+    </div>
+    <div class="relative min-h-[300px]">
+      <template x-for="(recipe, idx) in recipes" :key="recipe.title">
+        <section
+          x-show="activeRecipe === idx"
+          x-transition:enter="transition ease-out duration-500"
+          x-transition:enter-start="opacity-0 translate-y-8"
+          x-transition:enter-end="opacity-100 translate-y-0"
+          x-transition:leave="transition ease-in duration-300"
+          x-transition:leave-start="opacity-100 translate-y-0"
+          x-transition:leave-end="opacity-0 translate-y-8"
+          class="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-4 mx-auto"
+          style="display: none;"
+          @transitionend.window="handleMotion($el, activeRecipe === idx)"
+        >
+          <h2 class="text-2xl font-bold text-brown-900 mb-2" x-text="recipe.title"></h2>
+          <div>
+            <h3 class="font-semibold text-brown-700 mb-1">Ingredients:</h3>
+            <ul class="list-disc list-inside text-brown-800">
+              <template x-for="item in recipe.ingredients" :key="item">
+                <li x-text="item"></li>
+              </template>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold text-brown-700 mb-1">Instructions:</h3>
+            <ol class="list-decimal list-inside text-brown-800 space-y-1">
+              <template x-for="step in recipe.instructions" :key="step">
+                <li x-text="step"></li>
+              </template>
+            </ol>
+          </div>
+        </section>
+      </template>
+    </div>
+  </main>
+  <script>
+    function coffeeRecipes() {
+      return {
+        buttons: ['French Press', 'Pour Over', 'Espresso', 'Cold Brew'],
+        activeRecipe: 0,
+        recipes: [
+          {
+            title: 'French Press',
+            ingredients: [
+              '30g coarsely ground coffee',
+              '500ml hot water (just off boil)',
+              'French press',
+              'Stirrer',
+            ],
+            instructions: [
+              'Add coffee grounds to the French press.',
+              'Pour in hot water and stir gently.',
+              'Place the plunger on top and let steep for 4 minutes.',
+              'Slowly press the plunger down.',
+              'Serve and enjoy!'
+            ]
+          },
+          {
+            title: 'Pour Over',
+            ingredients: [
+              '20g medium ground coffee',
+              '320ml hot water',
+              'Pour over dripper & filter',
+              'Carafe or mug',
+            ],
+            instructions: [
+              'Place filter in dripper and rinse with hot water.',
+              'Add coffee grounds to filter.',
+              'Pour a small amount of water to bloom for 30 seconds.',
+              'Slowly pour remaining water in circles over 2-3 minutes.',
+              'Let drain, then serve.'
+            ]
+          },
+          {
+            title: 'Espresso',
+            ingredients: [
+              '18g finely ground coffee',
+              'Espresso machine',
+              'Filtered water',
+            ],
+            instructions: [
+              'Fill portafilter with coffee and tamp evenly.',
+              'Lock portafilter into machine.',
+              'Start extraction (25-30 seconds for a double shot).',
+              'Serve immediately.'
+            ]
+          },
+          {
+            title: 'Cold Brew',
+            ingredients: [
+              '80g coarsely ground coffee',
+              '1L cold filtered water',
+              'Large jar or pitcher',
+              'Fine mesh strainer or filter',
+            ],
+            instructions: [
+              'Combine coffee and water in jar.',
+              'Stir to ensure all grounds are wet.',
+              'Cover and steep in fridge for 12-18 hours.',
+              'Strain concentrate through filter.',
+              'Serve over ice, dilute as desired.'
+            ]
+          }
+        ],
+        showRecipe(idx) {
+          this.activeRecipe = idx;
+        },
+        handleMotion(el, isActive) {
+  if (isActive) {
+    window.motion.animate(
+      el,
+      { opacity: [0, 1], transform: ['translateY(32px)', 'translateY(0)'] },
+      { duration: 0.8, easing: 'easeOutExpo' } // Increased duration and a smoother easing
+    );
+  }
+}
+
+      }
+    }
+  </script>
+  <style>
+    /* Custom brown color for coffee theme */
+    .text-brown-900 { color: #4B2E19; }
+    .text-brown-800 { color: #6F4E37; }
+    .text-brown-700 { color: #8B5C2A; }
+    .bg-brown-800 { background-color: #6F4E37; }
+    .bg-brown-100 { background-color: #EDE6E0; }
+    .focus\:ring-brown-400:focus { box-shadow: 0 0 0 2px #BFA18F; }
+  </style>
+</body>
+</html>
