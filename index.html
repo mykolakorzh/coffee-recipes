@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
-        // Tailwind configuration for custom colors and design system
+        // Tailwind configuration for monochromatic cream design system
         tailwind.config = {
             theme: {
                 extend: {
@@ -19,31 +19,40 @@
                         'sans': ['Sora', 'system-ui', 'sans-serif']
                     },
                     colors: {
-                        // Coffee-inspired color palette
-                        coffee: {
-                            50: '#fdf7f0',
-                            100: '#f4e4d1',
-                            200: '#e8c5a0',
-                            300: '#d4a574',
-                            400: '#c08552',
-                            500: '#a0673d',
-                            600: '#8b5a34',
-                            700: '#6f4a2c',
-                            800: '#5a3d26',
-                            900: '#4a3420'
-                        },
+                        // Monochromatic cream palette
                         cream: {
-                            50: '#fefdfb',
-                            100: '#fdf9f3',
-                            200: '#f9f1e6',
-                            300: '#f3e6d3',
-                            400: '#ead5bb',
-                            500: '#dfc49f',
-                            600: '#d1b084',
-                            700: '#c19a6b',
-                            800: '#a67c56',
-                            900: '#8b6847'
+                            25: '#F6F1EF',   // Primary background
+                            50: '#F2ECE8',   // Subtle contrast
+                            100: '#EDE5E0',  // Light sections
+                            200: '#E4D7CF',  // Borders and dividers
+                            300: '#D7C5B8',  // Muted text
+                            400: '#C7AE9E',  // Secondary text
+                            500: '#B59485',  // Primary interactive
+                            600: '#A07B6B',  // Hover states
+                            700: '#8A6454',  // Active states
+                            800: '#6F4E3F',  // Dark text
+                            900: '#5A3D30',  // Darkest text
+                            950: '#4A3228'   // Highest contrast
                         }
+                    },
+                    boxShadow: {
+                        'card': '0 1px 3px rgba(90, 61, 48, 0.08), 0 1px 2px rgba(90, 61, 48, 0.04)',
+                        'card-hover': '0 4px 6px rgba(90, 61, 48, 0.06), 0 2px 4px rgba(90, 61, 48, 0.04)',
+                        'cream-soft': `
+                            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                            inset 0 -1px 0 rgba(181, 148, 133, 0.08),
+                            0 4px 8px rgba(90, 61, 48, 0.06)
+                        `,
+                        'cream-elevated': `
+                            inset 0 2px 4px rgba(255, 255, 255, 0.2),
+                            inset 0 -1px 2px rgba(181, 148, 133, 0.1),
+                            0 8px 20px rgba(90, 61, 48, 0.08)
+                        `,
+                        'cream-pressed': `
+                            inset 0 2px 4px rgba(90, 61, 48, 0.12),
+                            inset 0 -1px 2px rgba(255, 255, 255, 0.08),
+                            0 1px 3px rgba(90, 61, 48, 0.06)
+                        `
                     }
                 }
             }
@@ -51,44 +60,40 @@
     </script>
 </head>
 
-<body class="bg-gradient-to-br from-cream-50 to-coffee-50 min-h-screen font-sans" x-data="coffeeApp()">
+<body class="bg-cream-25 min-h-screen font-sans" x-data="coffeeApp()">
     
     <!-- Navigation Header -->
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-coffee-100">
+    <nav class="sticky top-0 z-50 bg-cream-50/90 backdrop-blur-md border-b border-cream-200">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 bg-gradient-to-br from-coffee-400 to-coffee-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">☕</span>
+                    <div class="w-8 h-8 bg-gradient-to-br from-cream-500 to-cream-700 rounded-lg flex items-center justify-center shadow-cream-soft">
+                        <span class="text-cream-50 font-bold text-sm">☕</span>
                     </div>
-                    <span class="font-semibold text-xl text-coffee-800">Brew Perfect</span>
+                    <span class="font-semibold text-xl text-cream-900">Brew Perfect</span>
                 </div>
+                
+                <!-- Back button -->
+                <button 
+                    x-show="currentView !== 'home'" 
+                    @click="goHome()"
+                    class="flex items-center space-x-2 px-4 py-2 text-cream-600 hover:text-cream-800 transition-colors duration-200"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform scale-95"
+                    x-transition:enter-end="opacity-100 transform scale-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100 transform scale-100"
+                    x-transition:leave-end="opacity-0 transform scale-95"
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span class="font-medium">Back to Methods</span>
+                </button>
             </div>
         </div>
     </nav>
-
-    <!-- Back button (shown when viewing recipe) -->
-    <div 
-        x-show="currentView !== 'home'" 
-        class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4"
-    >
-        <button 
-            @click="goHome()"
-            class="flex items-center space-x-2 px-4 py-2 text-coffee-600 hover:text-coffee-800 transition-colors duration-200"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0 transform scale-95"
-            x-transition:enter-end="opacity-100 transform scale-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100 transform scale-100"
-            x-transition:leave-end="opacity-0 transform scale-95"
-        >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            <span class="font-medium">Back to Methods</span>
-        </button>
-    </div>
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -106,17 +111,17 @@
             
             <!-- Hero Section -->
             <section class="text-center mb-16">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-coffee-800 mb-6 animate-fade-in">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-cream-950 mb-6">
                     Perfect Coffee,<br>
-                    <span class="text-coffee-500">Every Time</span>
+                    <span class="text-cream-600">Every Time</span>
                 </h1>
-                <p class="text-xl text-coffee-600 max-w-2xl mx-auto mb-8 animate-fade-in delay-150">
+                <p class="text-xl text-cream-700 max-w-2xl mx-auto mb-8">
                     Master the art of coffee brewing with our curated collection of recipes. 
                     From pour-over to espresso, discover your perfect cup.
                 </p>
-                <div class="flex justify-center animate-fade-in delay-300">
-                    <div class="bg-white/60 backdrop-blur-sm rounded-full px-6 py-3 border border-coffee-200">
-                        <span class="text-coffee-700 font-medium">Choose your brewing method below</span>
+                <div class="flex justify-center">
+                    <div class="bg-cream-50/80 backdrop-blur-sm rounded-full px-6 py-3 border border-cream-200 shadow-cream-soft">
+                        <span class="text-cream-800 font-medium">Choose your brewing method below</span>
                     </div>
                 </div>
             </section>
@@ -126,20 +131,19 @@
                 <template x-for="method in brewingMethods" :key="method.id">
                     <div 
                         @click="selectMethod(method)"
-                        class="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-coffee-100 hover:border-coffee-200 hover:-translate-y-1 animate-fade-in"
-                        :style="'animation-delay: ' + (brewingMethods.indexOf(method) * 100) + 'ms'"
+                        class="group cursor-pointer bg-cream-50 rounded-2xl p-6 shadow-cream-soft hover:shadow-cream-elevated transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
                     >
-                        <!-- Method Icon/Image Placeholder -->
-                        <div class="w-16 h-16 bg-gradient-to-br from-coffee-200 to-coffee-300 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <!-- Method Icon -->
+                        <div class="w-16 h-16 bg-gradient-to-br from-cream-100 to-cream-200 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-cream-soft">
                             <span class="text-2xl" x-text="method.icon"></span>
                         </div>
                         
                         <!-- Method Info -->
-                        <h3 class="font-semibold text-lg text-coffee-800 mb-2" x-text="method.name"></h3>
-                        <p class="text-coffee-600 text-sm mb-3" x-text="method.description"></p>
+                        <h3 class="font-semibold text-lg text-cream-900 mb-2" x-text="method.name"></h3>
+                        <p class="text-cream-600 text-sm mb-3" x-text="method.description"></p>
                         
                         <!-- Method Stats -->
-                        <div class="flex justify-between text-xs text-coffee-500">
+                        <div class="flex justify-between text-xs text-cream-500">
                             <span x-text="method.time"></span>
                             <span x-text="method.difficulty"></span>
                         </div>
@@ -161,65 +165,65 @@
             <div x-show="selectedMethod" class="max-w-4xl mx-auto">
                 
                 <!-- Recipe Header -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-coffee-100 mb-8">
+                <div class="bg-cream-50 rounded-2xl p-8 shadow-cream-soft border border-cream-200 mb-8">
                     <div class="flex items-start justify-between mb-6">
                         <div>
-                            <h1 class="text-3xl font-bold text-coffee-800 mb-2" x-text="selectedMethod?.name"></h1>
-                            <p class="text-coffee-600 text-lg" x-text="selectedMethod?.longDescription"></p>
+                            <h1 class="text-3xl font-bold text-cream-950 mb-2" x-text="selectedMethod?.name"></h1>
+                            <p class="text-cream-700 text-lg" x-text="selectedMethod?.longDescription"></p>
                         </div>
-                        <div class="text-6xl opacity-20 animate-pulse" x-text="selectedMethod?.icon"></div>
+                        <div class="text-6xl text-cream-300 animate-pulse" x-text="selectedMethod?.icon"></div>
                     </div>
                     
                     <!-- Recipe Stats -->
-                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-coffee-100">
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-cream-200">
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-coffee-700" x-text="selectedMethod?.time"></div>
-                            <div class="text-sm text-coffee-500">Brew Time</div>
+                            <div class="text-2xl font-bold text-cream-800" x-text="selectedMethod?.time"></div>
+                            <div class="text-sm text-cream-500">Brew Time</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-coffee-700" x-text="selectedMethod?.difficulty"></div>
-                            <div class="text-sm text-coffee-500">Difficulty</div>
+                            <div class="text-2xl font-bold text-cream-800" x-text="selectedMethod?.difficulty"></div>
+                            <div class="text-sm text-cream-500">Difficulty</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-2xl font-bold text-coffee-700" x-text="selectedMethod?.yield"></div>
-                            <div class="text-sm text-coffee-500">Serves</div>
+                            <div class="text-2xl font-bold text-cream-800" x-text="selectedMethod?.yield"></div>
+                            <div class="text-sm text-cream-500">Serves</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Interactive Recipe Calculator -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-coffee-100 mb-8">
-                    <h2 class="text-xl font-semibold text-coffee-800 mb-6">Recipe Calculator</h2>
+                <div class="bg-cream-50 rounded-2xl p-8 shadow-cream-soft border border-cream-200 mb-8">
+                    <h2 class="text-xl font-semibold text-cream-900 mb-6">Recipe Calculator</h2>
                     
                     <div class="grid md:grid-cols-2 gap-8">
                         <!-- Serving Size Adjuster -->
                         <div>
-                            <label class="block text-sm font-medium text-coffee-700 mb-3">Serving Size</label>
+                            <label class="block text-sm font-medium text-cream-800 mb-3">Serving Size</label>
                             <div class="flex items-center space-x-4">
                                 <button 
                                     @click="adjustServings(-1)"
-                                    class="w-10 h-10 rounded-full bg-coffee-100 hover:bg-coffee-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                                    class="w-10 h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-cream-soft"
                                     :disabled="servings <= 1"
                                 >
-                                    <span class="text-coffee-600 font-bold">-</span>
+                                    <span class="text-cream-700 font-bold">-</span>
                                 </button>
                                 <div class="text-center">
-                                    <div class="text-2xl font-bold text-coffee-800 transition-all duration-200" x-text="servings"></div>
-                                    <div class="text-sm text-coffee-500">cups</div>
+                                    <div class="text-2xl font-bold text-cream-900 transition-all duration-200" x-text="servings"></div>
+                                    <div class="text-sm text-cream-600">cups</div>
                                 </div>
                                 <button 
                                     @click="adjustServings(1)"
-                                    class="w-10 h-10 rounded-full bg-coffee-100 hover:bg-coffee-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                                    class="w-10 h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-cream-soft"
                                     :disabled="servings >= 6"
                                 >
-                                    <span class="text-coffee-600 font-bold">+</span>
+                                    <span class="text-cream-700 font-bold">+</span>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Coffee Strength -->
                         <div>
-                            <label class="block text-sm font-medium text-coffee-700 mb-3">Coffee Strength</label>
+                            <label class="block text-sm font-medium text-cream-800 mb-3">Coffee Strength</label>
                             <div class="space-y-2">
                                 <input 
                                     type="range" 
@@ -227,9 +231,9 @@
                                     max="1.2" 
                                     step="0.1" 
                                     x-model="strengthMultiplier"
-                                    class="w-full h-2 bg-coffee-200 rounded-lg appearance-none cursor-pointer transition-all duration-200"
+                                    class="w-full h-2 bg-cream-200 rounded-lg appearance-none cursor-pointer transition-all duration-200"
                                 >
-                                <div class="flex justify-between text-xs text-coffee-500">
+                                <div class="flex justify-between text-xs text-cream-600">
                                     <span>Mild</span>
                                     <span>Medium</span>
                                     <span>Strong</span>
@@ -239,16 +243,16 @@
                     </div>
 
                     <!-- Calculated Recipe -->
-                    <div class="mt-8 p-6 bg-coffee-50 rounded-xl border border-coffee-200">
-                        <h3 class="font-semibold text-coffee-800 mb-4">Your Recipe</h3>
+                    <div class="mt-8 p-6 bg-cream-100 rounded-xl border border-cream-200 shadow-cream-soft">
+                        <h3 class="font-semibold text-cream-900 mb-4">Your Recipe</h3>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="transition-all duration-300">
-                                <span class="text-coffee-600">Coffee:</span>
-                                <span class="font-semibold text-coffee-800 ml-2" x-text="calculatedCoffee + 'g'"></span>
+                                <span class="text-cream-700">Coffee:</span>
+                                <span class="font-semibold text-cream-900 ml-2" x-text="calculatedCoffee + 'g'"></span>
                             </div>
                             <div class="transition-all duration-300">
-                                <span class="text-coffee-600">Water:</span>
-                                <span class="font-semibold text-coffee-800 ml-2" x-text="calculatedWater + 'ml'"></span>
+                                <span class="text-cream-700">Water:</span>
+                                <span class="font-semibold text-cream-900 ml-2" x-text="calculatedWater + 'ml'"></span>
                             </div>
                         </div>
                     </div>
@@ -257,41 +261,41 @@
                 <!-- Equipment & Ingredients -->
                 <div class="grid md:grid-cols-2 gap-8 mb-8">
                     <!-- Equipment -->
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-coffee-100">
-                        <h3 class="font-semibold text-coffee-800 mb-4">Equipment Needed</h3>
+                    <div class="bg-cream-50 rounded-2xl p-6 shadow-cream-soft border border-cream-200">
+                        <h3 class="font-semibold text-cream-900 mb-4">Equipment Needed</h3>
                         <ul class="space-y-2">
                             <template x-for="item in selectedMethod?.equipment" :key="item">
-                                <li class="flex items-center space-x-3 transition-all duration-200 hover:bg-coffee-50 rounded-lg p-2 -m-2">
-                                    <div class="w-2 h-2 bg-coffee-400 rounded-full"></div>
-                                    <span class="text-coffee-700" x-text="item"></span>
+                                <li class="flex items-center space-x-3 transition-all duration-200 hover:bg-cream-100 rounded-lg p-2 -m-2">
+                                    <div class="w-2 h-2 bg-cream-500 rounded-full"></div>
+                                    <span class="text-cream-800" x-text="item"></span>
                                 </li>
                             </template>
                         </ul>
                     </div>
 
                     <!-- Ingredients -->
-                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-coffee-100">
-                        <h3 class="font-semibold text-coffee-800 mb-4">What You'll Need</h3>
+                    <div class="bg-cream-50 rounded-2xl p-6 shadow-cream-soft border border-cream-200">
+                        <h3 class="font-semibold text-cream-900 mb-4">What You'll Need</h3>
                         <div class="space-y-3">
                             <div class="flex justify-between transition-all duration-300">
-                                <span class="text-coffee-700">Coffee (medium grind)</span>
-                                <span class="font-semibold text-coffee-800" x-text="calculatedCoffee + 'g'"></span>
+                                <span class="text-cream-700">Coffee (medium grind)</span>
+                                <span class="font-semibold text-cream-900" x-text="calculatedCoffee + 'g'"></span>
                             </div>
                             <div class="flex justify-between transition-all duration-300">
-                                <span class="text-coffee-700">Hot water (92-96°C)</span>
-                                <span class="font-semibold text-coffee-800" x-text="calculatedWater + 'ml'"></span>
+                                <span class="text-cream-700">Hot water (92-96°C)</span>
+                                <span class="font-semibold text-cream-900" x-text="calculatedWater + 'ml'"></span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Brewing Steps with Timer -->
-                <div class="bg-white rounded-2xl p-8 shadow-sm border border-coffee-100 mb-8">
+                <div class="bg-cream-50 rounded-2xl p-8 shadow-cream-soft border border-cream-200 mb-8">
                     <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-xl font-semibold text-coffee-800">Brewing Steps</h3>
+                        <h3 class="text-xl font-semibold text-cream-900">Brewing Steps</h3>
                         <button 
                             @click="toggleTimer()"
-                            class="px-4 py-2 bg-coffee-500 hover:bg-coffee-600 text-white rounded-lg transition-all duration-200 font-medium hover:scale-105 active:scale-95"
+                            class="px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-lg transition-all duration-200 font-medium hover:scale-105 active:scale-95 shadow-cream-elevated active:shadow-cream-pressed"
                             x-text="timerActive ? 'Stop Timer' : 'Start Timer'"
                         ></button>
                     </div>
@@ -299,7 +303,7 @@
                     <!-- Timer Display -->
                     <div 
                         x-show="timerActive" 
-                        class="mb-6 p-4 bg-coffee-50 rounded-xl border border-coffee-200"
+                        class="mb-6 p-4 bg-cream-100 rounded-xl border border-cream-200 shadow-cream-soft"
                         x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0 transform scale-95"
                         x-transition:enter-end="opacity-100 transform scale-100"
@@ -308,14 +312,14 @@
                         x-transition:leave-end="opacity-0 transform scale-95"
                     >
                         <div class="text-center">
-                            <div class="text-3xl font-bold text-coffee-800 mb-2 animate-pulse" x-text="formatTime(currentTime)"></div>
-                            <div class="text-coffee-600" x-text="'Step ' + (currentStep + 1) + ' of ' + selectedMethod?.steps.length"></div>
+                            <div class="text-3xl font-bold text-cream-900 mb-2 animate-pulse" x-text="formatTime(currentTime)"></div>
+                            <div class="text-cream-700" x-text="'Step ' + (currentStep + 1) + ' of ' + selectedMethod?.steps.length"></div>
                         </div>
                         
                         <!-- Progress Bar -->
-                        <div class="mt-4 w-full bg-coffee-200 rounded-full h-2">
+                        <div class="mt-4 w-full bg-cream-200 rounded-full h-2">
                             <div 
-                                class="bg-coffee-500 h-2 rounded-full transition-all duration-500 ease-out"
+                                class="bg-cream-600 h-2 rounded-full transition-all duration-500 ease-out"
                                 :style="'width: ' + ((currentStep + 1) / selectedMethod?.steps.length * 100) + '%'"
                             ></div>
                         </div>
@@ -326,16 +330,16 @@
                         <template x-for="(step, index) in selectedMethod?.steps" :key="index">
                             <div 
                                 class="flex space-x-4 p-4 rounded-xl transition-all duration-300"
-                                :class="timerActive && index === currentStep ? 'bg-coffee-100 border border-coffee-300 scale-105' : 'bg-gray-50 hover:bg-gray-100'"
+                                :class="timerActive && index === currentStep ? 'bg-cream-100 border border-cream-300 scale-105 shadow-cream-soft' : 'bg-cream-25 hover:bg-cream-50'"
                             >
                                 <div 
-                                    class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-300"
-                                    :class="timerActive && index <= currentStep ? 'bg-coffee-500 text-white animate-pulse' : 'bg-coffee-200 text-coffee-700'"
+                                    class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-cream-soft"
+                                    :class="timerActive && index <= currentStep ? 'bg-cream-600 text-cream-50 animate-pulse' : 'bg-cream-200 text-cream-800'"
                                     x-text="index + 1"
                                 ></div>
                                 <div class="flex-1">
-                                    <p class="text-coffee-800" x-text="step.instruction"></p>
-                                    <p class="text-sm text-coffee-500 mt-1" x-text="step.time"></p>
+                                    <p class="text-cream-900" x-text="step.instruction"></p>
+                                    <p class="text-sm text-cream-600 mt-1" x-text="step.time"></p>
                                 </div>
                             </div>
                         </template>
@@ -343,14 +347,14 @@
                 </div>
 
                 <!-- Pro Tips -->
-                <div class="bg-gradient-to-r from-coffee-50 to-cream-50 rounded-2xl p-8 border border-coffee-200">
-                    <h3 class="font-semibold text-coffee-800 mb-4 flex items-center">
+                <div class="bg-gradient-to-r from-cream-50 to-cream-100 rounded-2xl p-8 border border-cream-200 shadow-cream-soft">
+                    <h3 class="font-semibold text-cream-900 mb-4 flex items-center">
                         <span class="text-xl mr-2 animate-bounce">💡</span>
                         Pro Tips
                     </h3>
                     <div class="space-y-3">
                         <template x-for="tip in selectedMethod?.tips" :key="tip">
-                            <p class="text-coffee-700 transition-all duration-200 hover:text-coffee-800" x-text="tip"></p>
+                            <p class="text-cream-800 transition-all duration-200 hover:text-cream-900" x-text="tip"></p>
                         </template>
                     </div>
                 </div>
@@ -359,18 +363,18 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-16 py-8 border-t border-coffee-100 bg-white/50">
+    <footer class="mt-16 py-8 border-t border-cream-200 bg-cream-50/60">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-coffee-600">Made with ☕ and love for coffee enthusiasts everywhere</p>
+            <p class="text-cream-700">Made with ☕ and love for coffee enthusiasts everywhere</p>
         </div>
     </footer>
 
     <script>
-        // Alpine.js main application logic
+        // Alpine.js main application logic (same as before)
         function coffeeApp() {
             return {
                 // Application state
-                currentView: 'home', // 'home' or 'recipe'
+                currentView: 'home',
                 selectedMethod: null,
                 servings: 1,
                 strengthMultiplier: 1.0,
@@ -379,7 +383,7 @@
                 currentStep: 0,
                 timerInterval: null,
 
-                // Brewing methods data - This is where you'll add all your coffee recipes
+                // Brewing methods data
                 brewingMethods: [
                     {
                         id: 'v60',
@@ -390,7 +394,7 @@
                         time: '3-4 min',
                         difficulty: 'Medium',
                         yield: '1-2 cups',
-                        baseRatio: { coffee: 20, water: 300 }, // coffee in grams, water in ml
+                        baseRatio: { coffee: 20, water: 300 },
                         equipment: [
                             'Hario V60 dripper',
                             'V60 paper filters',
@@ -676,7 +680,7 @@
                     }
                 ],
 
-                // Computed properties for recipe calculations
+                // Computed properties
                 get calculatedCoffee() {
                     if (!this.selectedMethod) return 0;
                     return Math.round(this.selectedMethod.baseRatio.coffee * this.servings * this.strengthMultiplier);
@@ -687,7 +691,7 @@
                     return Math.round(this.selectedMethod.baseRatio.water * this.servings);
                 },
 
-                // Navigation methods
+                // Methods (same as before)
                 selectMethod(method) {
                     this.selectedMethod = method;
                     this.currentView = 'recipe';
@@ -702,7 +706,6 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 },
 
-                // Recipe calculator methods
                 adjustServings(delta) {
                     const newServings = this.servings + delta;
                     if (newServings >= 1 && newServings <= 6) {
@@ -710,7 +713,6 @@
                     }
                 },
 
-                // Timer functionality
                 toggleTimer() {
                     if (this.timerActive) {
                         this.stopTimer();
@@ -745,12 +747,10 @@
                 },
 
                 updateCurrentStep() {
-                    // Simple step progression based on time
-                    // You can enhance this with actual step timings
                     if (!this.selectedMethod) return;
                     
                     const totalSteps = this.selectedMethod.steps.length;
-                    const stepDuration = 60; // 60 seconds per step (adjust as needed)
+                    const stepDuration = 60;
                     
                     const newStep = Math.min(
                         Math.floor(this.currentTime / stepDuration),
@@ -766,10 +766,8 @@
                     return `${mins}:${secs.toString().padStart(2, '0')}`;
                 },
 
-                // Initialize the app
                 init() {
-                    // Any initialization logic can go here
-                    console.log('Coffee Brewing Guide initialized with Sora font! ☕');
+                    console.log('Monochromatic Cream Coffee App initialized! ☕');
                 }
             }
         }
