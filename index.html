@@ -1,202 +1,762 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coffee Recipes</title>
-  <!-- External Dependencies -->
-  <!-- TailwindCSS for styling -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- AlpineJS for reactivity and interactivity -->
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-</head>
-<body class="bg-gray-50 min-h-screen flex flex-col items-center p-4">
-  <!-- Header Section -->
-  <header class="w-full max-w-xl mx-auto py-8">
-    <h1 class="text-4xl font-bold text-center text-brown-900">Coffee Recipes</h1>
-  </header>
-
-  <!-- Main Content Section -->
-  <main class="w-full max-w-xl mx-auto" x-data="coffeeRecipes()">
-    <!-- Recipe Navigation Buttons -->
-    <div class="flex sm:flex-row bg-gray-100 p-1 rounded-2xl shadow-inner max-w-full sm:max-w-fit mx-auto gap-2 sm:gap-0">
-      <!-- On mobile, buttons stack vertically and are full width; on sm+ they are inline -->
-      <template x-for="(label, idx) in buttons" :key="label">
-        <button
-          @click="showRecipe(idx)"
-          class="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-semibold transition-all duration-200 focus:outline-none text-base sm:text-lg"
-          :class="{
-            'bg-white text-gray-900 shadow-sm': activeRecipe === idx,
-            'text-gray-600 hover:text-gray-800': activeRecipe !== idx
-          }"
-        >
-          <span x-text="label"></span>
-        </button>
-      </template>
-    </div>
-
-    <!-- Recipe Content Container -->
-    <div class="relative min-h-[300px] mt-4">
-      <template x-for="(recipe, idx) in recipes" :key="recipe.title">
-        <!-- Individual Recipe Card -->
-        <section
-          x-show="activeRecipe === idx"
-          x-transition:enter="transition ease-out duration-500"
-          x-transition:enter-start="opacity-0 translate-y-8"
-          x-transition:enter-end="opacity-100 translate-y-0"
-          x-transition:leave="transition ease-in duration-300"
-          x-transition:leave-start="opacity-100 translate-y-0"
-          x-transition:leave-end="opacity-0 translate-y-8"
-          class="bg-white rounded-xl shadow-lg p-4 md:p-6 flex flex-col gap-6 md:gap-16 mx-auto"
-          style="display: none;"
-        >
-          <!-- Two-column layout for recipe content and image -->
-          <div class="flex flex-col md:flex-row gap-6 md:gap-16">
-            <!-- Left column: Recipe details -->
-            <div class="flex-1">
-              <h2 class="text-xl md:text-2xl font-bold text-brown-900 mb-2" x-text="recipe.title"></h2>
-              <!-- Ingredients section -->
-              <div>
-                <h3 class="font-semibold text-brown-700 mb-1">Ingredients:</h3>
-                <ul class="list-disc list-inside text-brown-800 text-sm md:text-base">
-                  <template x-for="item in recipe.ingredients" :key="item">
-                    <li x-text="item"></li>
-                  </template>
-                </ul>
-              </div>
-              <!-- Instructions section -->
-              <div class="mt-2">
-                <h3 class="font-semibold text-brown-700 mb-1">Instructions:</h3>
-                <ol class="list-decimal list-inside text-brown-800 space-y-1 text-sm md:text-base">
-                  <template x-for="step in recipe.instructions" :key="step">
-                    <li x-text="step"></li>
-                  </template>
-                </ol>
-              </div>
-            </div>
-            <!-- Right column: Recipe image (below text on mobile, right on md+) -->
-            <div class="flex-1 flex items-center justify-center mt-4 md:mt-0">
-              <img :src="recipe.image" :alt="recipe.title" class="rounded-lg shadow-md w-full max-w-xs md:max-w-full h-auto object-cover">
-            </div>
-          </div>
-        </section>
-      </template>
-    </div>
-  </main>
-
-  <!-- Alpine.js Component -->
-  <script>
-    function coffeeRecipes() {
-      return {
-        // Navigation buttons labels
-        buttons: ['French Press', 'Pour Over', 'Espresso', 'Cold Brew', 'Aeropress'],
-        // Currently active recipe index
-        activeRecipe: 0,
-        // Recipe data array containing all coffee recipes
-        recipes: [
-          {
-            title: 'French Press',
-            ingredients: [
-              '30g coarsely ground coffee',
-              '500ml hot water (just off boil)',
-              'French press',
-              'Stirrer',
-            ],
-            instructions: [
-              'Add coffee grounds to the French press.',
-              'Pour in hot water and stir gently.',
-              'Place the plunger on top and let steep for 4 minutes.',
-              'Slowly press the plunger down.',
-              'Serve and enjoy!'
-            ],
-            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
-          },
-          {
-            title: 'Pour Over',
-            ingredients: [
-              '20g medium ground coffee',
-              '320ml hot water',
-              'Pour over dripper & filter',
-              'Carafe or mug',
-            ],
-            instructions: [
-              'Place filter in dripper and rinse with hot water.',
-              'Add coffee grounds to filter.',
-              'Pour a small amount of water to bloom for 30 seconds.',
-              'Slowly pour remaining water in circles over 2-3 minutes.',
-              'Let drain, then serve.'
-            ],
-            image: 'https://images.unsplash.com/photo-1599639668273-1846e1e49c8a?w=500&auto=format&fit=crop&q=60'
-          },
-          {
-            title: 'Espresso',
-            ingredients: [
-              '18g finely ground coffee',
-              'Espresso machine',
-              'Filtered water',
-            ],
-            instructions: [
-              'Fill portafilter with coffee and tamp evenly.',
-              'Lock portafilter into machine.',
-              'Start extraction (25-30 seconds for a double shot).',
-              'Serve immediately.'
-            ],
-            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
-          },
-          {
-            title: 'Cold Brew',
-            ingredients: [
-              '80g coarsely ground coffee',
-              '1L cold filtered water',
-              'Large jar or pitcher',
-              'Fine mesh strainer or filter',
-            ],
-            instructions: [
-              'Combine coffee and water in jar.',
-              'Stir to ensure all grounds are wet.',
-              'Cover and steep in fridge for 12-18 hours.',
-              'Strain concentrate through filter.',
-              'Serve over ice, dilute as desired.'
-            ],
-            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
-          },
-          {
-            title: 'Aeropress',
-            ingredients: [
-              '15g medium-fine ground coffee',
-              '200ml hot water (80-85°C)',
-              'Aeropress',
-              'Filter paper',
-              'Stirrer',
-            ],
-            instructions: [
-              'Place filter in cap and rinse with hot water.',
-              'Add coffee grounds to chamber.',
-              'Pour in hot water and stir for 10 seconds.',
-              'Insert plunger and let steep for 1 minute.',
-              'Press down slowly and steadily.',
-              'Serve and enjoy!'
-            ],
-            image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&auto=format&fit=crop&q=60'
-          }
-        ],
-        // Method to switch between recipes
-        showRecipe(idx) {
-          this.activeRecipe = idx;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Perfect - Coffee Brewing Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // Tailwind configuration for custom colors and design system
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    colors: {
+                        // Coffee-inspired color palette
+                        coffee: {
+                            50: '#fdf7f0',
+                            100: '#f4e4d1',
+                            200: '#e8c5a0',
+                            300: '#d4a574',
+                            400: '#c08552',
+                            500: '#a0673d',
+                            600: '#8b5a34',
+                            700: '#6f4a2c',
+                            800: '#5a3d26',
+                            900: '#4a3420'
+                        },
+                        cream: {
+                            50: '#fefdfb',
+                            100: '#fdf9f3',
+                            200: '#f9f1e6',
+                            300: '#f3e6d3',
+                            400: '#ead5bb',
+                            500: '#dfc49f',
+                            600: '#d1b084',
+                            700: '#c19a6b',
+                            800: '#a67c56',
+                            900: '#8b6847'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out',
+                        'pulse-soft': 'pulseSoft 2s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)' },
+                            '100%': { transform: 'translateY(0)' }
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.8' }
+                        }
+                    }
+                }
+            }
         }
-      }
-    }
-  </script>
+    </script>
+</head>
 
-  <!-- Custom Styles -->
-  <style>
-    /* Custom brown color palette for coffee theme */
-    .text-brown-900 { color: #4B2E19; } /* Darkest brown for headings */
-    .text-brown-800 { color: #6F4E37; } /* Medium brown for text */
-    .text-brown-700 { color: #8B5C2A; } /* Lighter brown for subheadings */
-    .bg-brown-800 { background-color: #6F4E37; } /* Background brown */
-    .bg-brown-100 { background-color: #EDE6E0; } /* Light brown background */
-    .focus\:ring-brown-400:focus { box-shadow: 0 0 0 2px #BFA18F; } /* Focus ring color */
-  </style>
+<body class="bg-gradient-to-br from-cream-50 to-coffee-50 min-h-screen font-sans" x-data="coffeeApp()">
+    
+    <!-- Navigation Header -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-coffee-100">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-coffee-400 to-coffee-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">☕</span>
+                    </div>
+                    <span class="font-semibold text-xl text-coffee-800">Brew Perfect</span>
+                </div>
+                
+                <!-- Back button (shown when viewing recipe) -->
+                <button 
+                    x-show="currentView !== 'home'" 
+                    @click="goHome()"
+                    class="flex items-center space-x-2 px-4 py-2 text-coffee-600 hover:text-coffee-800 transition-colors duration-200"
+                    x-transition
+                >
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span class="font-medium">Back to Methods</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Home View: Hero + Method Grid -->
+        <div x-show="currentView === 'home'" x-transition.opacity.duration.500ms>
+            
+            <!-- Hero Section -->
+            <section class="text-center mb-16">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-coffee-800 mb-6 animate-fade-in">
+                    Perfect Coffee,<br>
+                    <span class="text-coffee-500">Every Time</span>
+                </h1>
+                <p class="text-xl text-coffee-600 max-w-2xl mx-auto mb-8 animate-fade-in">
+                    Master the art of coffee brewing with our curated collection of recipes. 
+                    From pour-over to espresso, discover your perfect cup.
+                </p>
+                <div class="flex justify-center animate-fade-in">
+                    <div class="bg-white/60 backdrop-blur-sm rounded-full px-6 py-3 border border-coffee-200">
+                        <span class="text-coffee-700 font-medium">Choose your brewing method below</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Brewing Methods Grid -->
+            <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <template x-for="method in brewingMethods" :key="method.id">
+                    <div 
+                        @click="selectMethod(method)"
+                        class="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-coffee-100 hover:border-coffee-200 hover:-translate-y-1"
+                    >
+                        <!-- Method Icon/Image Placeholder -->
+                        <div class="w-16 h-16 bg-gradient-to-br from-coffee-200 to-coffee-300 rounded-xl mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <span class="text-2xl" x-text="method.icon"></span>
+                        </div>
+                        
+                        <!-- Method Info -->
+                        <h3 class="font-semibold text-lg text-coffee-800 mb-2" x-text="method.name"></h3>
+                        <p class="text-coffee-600 text-sm mb-3" x-text="method.description"></p>
+                        
+                        <!-- Method Stats -->
+                        <div class="flex justify-between text-xs text-coffee-500">
+                            <span x-text="method.time"></span>
+                            <span x-text="method.difficulty"></span>
+                        </div>
+                    </div>
+                </template>
+            </section>
+        </div>
+
+        <!-- Recipe Detail View -->
+        <div x-show="currentView === 'recipe'" x-transition.opacity.duration.500ms>
+            <div x-show="selectedMethod" class="max-w-4xl mx-auto">
+                
+                <!-- Recipe Header -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-coffee-100 mb-8">
+                    <div class="flex items-start justify-between mb-6">
+                        <div>
+                            <h1 class="text-3xl font-bold text-coffee-800 mb-2" x-text="selectedMethod?.name"></h1>
+                            <p class="text-coffee-600 text-lg" x-text="selectedMethod?.longDescription"></p>
+                        </div>
+                        <div class="text-6xl opacity-20" x-text="selectedMethod?.icon"></div>
+                    </div>
+                    
+                    <!-- Recipe Stats -->
+                    <div class="grid grid-cols-3 gap-4 pt-6 border-t border-coffee-100">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-coffee-700" x-text="selectedMethod?.time"></div>
+                            <div class="text-sm text-coffee-500">Brew Time</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-coffee-700" x-text="selectedMethod?.difficulty"></div>
+                            <div class="text-sm text-coffee-500">Difficulty</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-coffee-700" x-text="selectedMethod?.yield"></div>
+                            <div class="text-sm text-coffee-500">Serves</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Recipe Calculator -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-coffee-100 mb-8">
+                    <h2 class="text-xl font-semibold text-coffee-800 mb-6">Recipe Calculator</h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Serving Size Adjuster -->
+                        <div>
+                            <label class="block text-sm font-medium text-coffee-700 mb-3">Serving Size</label>
+                            <div class="flex items-center space-x-4">
+                                <button 
+                                    @click="adjustServings(-1)"
+                                    class="w-10 h-10 rounded-full bg-coffee-100 hover:bg-coffee-200 flex items-center justify-center transition-colors duration-200"
+                                    :disabled="servings <= 1"
+                                >
+                                    <span class="text-coffee-600 font-bold">-</span>
+                                </button>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-coffee-800" x-text="servings"></div>
+                                    <div class="text-sm text-coffee-500">cups</div>
+                                </div>
+                                <button 
+                                    @click="adjustServings(1)"
+                                    class="w-10 h-10 rounded-full bg-coffee-100 hover:bg-coffee-200 flex items-center justify-center transition-colors duration-200"
+                                    :disabled="servings >= 6"
+                                >
+                                    <span class="text-coffee-600 font-bold">+</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Coffee Strength -->
+                        <div>
+                            <label class="block text-sm font-medium text-coffee-700 mb-3">Coffee Strength</label>
+                            <div class="space-y-2">
+                                <input 
+                                    type="range" 
+                                    min="0.8" 
+                                    max="1.2" 
+                                    step="0.1" 
+                                    x-model="strengthMultiplier"
+                                    class="w-full h-2 bg-coffee-200 rounded-lg appearance-none cursor-pointer"
+                                >
+                                <div class="flex justify-between text-xs text-coffee-500">
+                                    <span>Mild</span>
+                                    <span>Medium</span>
+                                    <span>Strong</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Calculated Recipe -->
+                    <div class="mt-8 p-6 bg-coffee-50 rounded-xl border border-coffee-200">
+                        <h3 class="font-semibold text-coffee-800 mb-4">Your Recipe</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <span class="text-coffee-600">Coffee:</span>
+                                <span class="font-semibold text-coffee-800 ml-2" x-text="calculatedCoffee + 'g'"></span>
+                            </div>
+                            <div>
+                                <span class="text-coffee-600">Water:</span>
+                                <span class="font-semibold text-coffee-800 ml-2" x-text="calculatedWater + 'ml'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Equipment & Ingredients -->
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Equipment -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-coffee-100">
+                        <h3 class="font-semibold text-coffee-800 mb-4">Equipment Needed</h3>
+                        <ul class="space-y-2">
+                            <template x-for="item in selectedMethod?.equipment" :key="item">
+                                <li class="flex items-center space-x-3">
+                                    <div class="w-2 h-2 bg-coffee-400 rounded-full"></div>
+                                    <span class="text-coffee-700" x-text="item"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <!-- Ingredients -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-coffee-100">
+                        <h3 class="font-semibold text-coffee-800 mb-4">What You'll Need</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-coffee-700">Coffee (medium grind)</span>
+                                <span class="font-semibold text-coffee-800" x-text="calculatedCoffee + 'g'"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-coffee-700">Hot water (92-96°C)</span>
+                                <span class="font-semibold text-coffee-800" x-text="calculatedWater + 'ml'"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Brewing Steps with Timer -->
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-coffee-100 mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-semibold text-coffee-800">Brewing Steps</h3>
+                        <button 
+                            @click="toggleTimer()"
+                            class="px-4 py-2 bg-coffee-500 hover:bg-coffee-600 text-white rounded-lg transition-colors duration-200 font-medium"
+                            x-text="timerActive ? 'Stop Timer' : 'Start Timer'"
+                        ></button>
+                    </div>
+
+                    <!-- Timer Display -->
+                    <div x-show="timerActive" class="mb-6 p-4 bg-coffee-50 rounded-xl border border-coffee-200">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-coffee-800 mb-2" x-text="formatTime(currentTime)"></div>
+                            <div class="text-coffee-600" x-text="'Step ' + (currentStep + 1) + ' of ' + selectedMethod?.steps.length"></div>
+                        </div>
+                        
+                        <!-- Progress Bar -->
+                        <div class="mt-4 w-full bg-coffee-200 rounded-full h-2">
+                            <div 
+                                class="bg-coffee-500 h-2 rounded-full transition-all duration-300"
+                                :style="'width: ' + ((currentStep + 1) / selectedMethod?.steps.length * 100) + '%'"
+                            ></div>
+                        </div>
+                    </div>
+
+                    <!-- Steps List -->
+                    <div class="space-y-4">
+                        <template x-for="(step, index) in selectedMethod?.steps" :key="index">
+                            <div 
+                                class="flex space-x-4 p-4 rounded-xl transition-all duration-300"
+                                :class="timerActive && index === currentStep ? 'bg-coffee-100 border border-coffee-300' : 'bg-gray-50'"
+                            >
+                                <div 
+                                    class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold"
+                                    :class="timerActive && index <= currentStep ? 'bg-coffee-500 text-white' : 'bg-coffee-200 text-coffee-700'"
+                                    x-text="index + 1"
+                                ></div>
+                                <div class="flex-1">
+                                    <p class="text-coffee-800" x-text="step.instruction"></p>
+                                    <p class="text-sm text-coffee-500 mt-1" x-text="step.time"></p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Pro Tips -->
+                <div class="bg-gradient-to-r from-coffee-50 to-cream-50 rounded-2xl p-8 border border-coffee-200">
+                    <h3 class="font-semibold text-coffee-800 mb-4 flex items-center">
+                        <span class="text-xl mr-2">💡</span>
+                        Pro Tips
+                    </h3>
+                    <div class="space-y-3">
+                        <template x-for="tip in selectedMethod?.tips" :key="tip">
+                            <p class="text-coffee-700" x-text="tip"></p>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 py-8 border-t border-coffee-100 bg-white/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-coffee-600">Made with ☕ and love for coffee enthusiasts everywhere</p>
+        </div>
+    </footer>
+
+    <script>
+        // Alpine.js main application logic
+        function coffeeApp() {
+            return {
+                // Application state
+                currentView: 'home', // 'home' or 'recipe'
+                selectedMethod: null,
+                servings: 1,
+                strengthMultiplier: 1.0,
+                timerActive: false,
+                currentTime: 0,
+                currentStep: 0,
+                timerInterval: null,
+
+                // Brewing methods data - This is where you'll add all your coffee recipes
+                brewingMethods: [
+                    {
+                        id: 'v60',
+                        name: 'Hario V60',
+                        icon: '🌀',
+                        description: 'Clean, bright, and nuanced flavors',
+                        longDescription: 'The V60 produces a clean, bright cup that highlights the unique characteristics of your coffee beans.',
+                        time: '3-4 min',
+                        difficulty: 'Medium',
+                        yield: '1-2 cups',
+                        baseRatio: { coffee: 20, water: 300 }, // coffee in grams, water in ml
+                        equipment: [
+                            'Hario V60 dripper',
+                            'V60 paper filters',
+                            'Gooseneck kettle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Heat water to 92-96°C and rinse the filter in the V60. Place on scale and zero.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Add ground coffee and create a small well in the center. Start timer and pour 2x coffee weight in water.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'Let coffee bloom for 30 seconds, then begin slow, circular pours.',
+                                time: '0:30 - 2:30'
+                            },
+                            {
+                                instruction: 'Complete final pour and let coffee finish dripping.',
+                                time: '2:30 - 3:30'
+                            }
+                        ],
+                        tips: [
+                            'Use a medium-fine grind, similar to table salt',
+                            'Pour in slow, circular motions from center outward',
+                            'Maintain consistent water temperature throughout brewing'
+                        ]
+                    },
+                    {
+                        id: 'aeropress',
+                        name: 'AeroPress',
+                        icon: '🔄',
+                        description: 'Full-bodied with low acidity',
+                        longDescription: 'AeroPress creates a full-bodied, smooth cup with lower acidity than most brewing methods.',
+                        time: '2-3 min',
+                        difficulty: 'Easy',
+                        yield: '1 cup',
+                        baseRatio: { coffee: 17, water: 250 },
+                        equipment: [
+                            'AeroPress brewer',
+                            'AeroPress filters',
+                            'Stirring paddle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Insert filter into cap and rinse. Assemble AeroPress in standard position.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Add ground coffee and pour hot water (85°C). Stir gently.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'Steep for 1 minute, then attach cap and flip onto cup.',
+                                time: '0:15 - 1:15'
+                            },
+                            {
+                                instruction: 'Press down slowly and steadily for 20-30 seconds.',
+                                time: '1:15 - 1:45'
+                            }
+                        ],
+                        tips: [
+                            'Use a fine to medium grind',
+                            'Experiment with inverted method for longer steeping',
+                            'Press slowly and consistently for best extraction'
+                        ]
+                    },
+                    {
+                        id: 'chemex',
+                        name: 'Chemex',
+                        icon: '⏳',
+                        description: 'Clean and crisp with bright acidity',
+                        longDescription: 'Chemex filters remove oils and fine particles, resulting in a very clean, tea-like cup.',
+                        time: '4-5 min',
+                        difficulty: 'Medium',
+                        yield: '2-4 cups',
+                        baseRatio: { coffee: 30, water: 500 },
+                        equipment: [
+                            'Chemex brewer',
+                            'Chemex bonded filters',
+                            'Gooseneck kettle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Place filter with 3-layer side against spout. Rinse with hot water and empty.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Add coffee and create well. Start timer, pour 2x coffee weight for bloom.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'After 45 seconds, pour in slow circles reaching total weight by 3:30.',
+                                time: '0:45 - 3:30'
+                            },
+                            {
+                                instruction: 'Let coffee finish dripping completely.',
+                                time: '3:30 - 5:00'
+                            }
+                        ],
+                        tips: [
+                            'Use medium-coarse grind, coarser than V60',
+                            'Pour very slowly to avoid over-extraction',
+                            'The thick filter removes most oils and sediment'
+                        ]
+                    },
+                    {
+                        id: 'kalita',
+                        name: 'Kalita Wave',
+                        icon: '🌊',
+                        description: 'Balanced and forgiving',
+                        longDescription: 'The flat-bottom design provides even extraction and a well-balanced, forgiving cup.',
+                        time: '3-4 min',
+                        difficulty: 'Easy',
+                        yield: '1-2 cups',
+                        baseRatio: { coffee: 22, water: 350 },
+                        equipment: [
+                            'Kalita Wave dripper',
+                            'Kalita Wave filters',
+                            'Gooseneck kettle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Place filter and rinse. Add coffee and level the bed.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Start timer, pour 3x coffee weight in center for bloom.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'After 45 seconds, pour in 3-4 stages, keeping water level consistent.',
+                                time: '0:45 - 2:45'
+                            },
+                            {
+                                instruction: 'Let coffee finish dripping.',
+                                time: '2:45 - 3:30'
+                            }
+                        ],
+                        tips: [
+                            'Use medium grind, similar to kosher salt',
+                            'Keep water level consistent during pours',
+                            'The flat bottom provides more even extraction than V60'
+                        ]
+                    },
+                    {
+                        id: 'french-press',
+                        name: 'French Press',
+                        icon: '☕',
+                        description: 'Full-bodied and rich',
+                        longDescription: 'Immersion brewing creates a full-bodied, rich cup with oils and fine particles.',
+                        time: '4-5 min',
+                        difficulty: 'Easy',
+                        yield: '2-4 cups',
+                        baseRatio: { coffee: 30, water: 500 },
+                        equipment: [
+                            'French Press',
+                            'Kettle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer',
+                            'Stirring spoon'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Preheat French Press with hot water, then empty and add coarse ground coffee.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Start timer and pour hot water (96°C). Stir gently to saturate grounds.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Place lid on top but don\'t press. Steep for 4 minutes.',
+                                time: '0:30 - 4:30'
+                            },
+                            {
+                                instruction: 'Press plunger down slowly and serve immediately.',
+                                time: '4:30 - 5:00'
+                            }
+                        ],
+                        tips: [
+                            'Use coarse grind to prevent over-extraction',
+                            'Don\'t press too hard to avoid bitter flavors',
+                            'Serve immediately to prevent over-extraction'
+                        ]
+                    },
+                    {
+                        id: 'cold-brew',
+                        name: 'Cold Brew',
+                        icon: '🧊',
+                        description: 'Smooth and naturally sweet',
+                        longDescription: 'Long extraction time creates a smooth, naturally sweet concentrate with low acidity.',
+                        time: '12-24 hrs',
+                        difficulty: 'Easy',
+                        yield: '4-6 cups',
+                        baseRatio: { coffee: 100, water: 1000 },
+                        equipment: [
+                            'Large jar or cold brew maker',
+                            'Fine mesh strainer',
+                            'Cheesecloth or paper filter',
+                            'Digital scale',
+                            'Grinder'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Grind coffee coarsely and combine with room temperature water in jar.',
+                                time: '0:00 - 0:05'
+                            },
+                            {
+                                instruction: 'Stir well to ensure all grounds are saturated.',
+                                time: '0:05 - 0:10'
+                            },
+                            {
+                                instruction: 'Cover and steep at room temperature for 12-24 hours.',
+                                time: '12-24 hours'
+                            },
+                            {
+                                instruction: 'Strain through fine mesh and filter. Dilute concentrate 1:1 with water or milk.',
+                                time: '24:00 - 24:10'
+                            }
+                        ],
+                        tips: [
+                            'Use very coarse grind to make straining easier',
+                            'Longer steeping time (18-24h) creates stronger concentrate',
+                            'Store concentrate in refrigerator for up to 2 weeks'
+                        ]
+                    },
+                    {
+                        id: 'espresso',
+                        name: 'Espresso',
+                        icon: '⚡',
+                        description: 'Intense and concentrated',
+                        longDescription: 'High pressure extraction creates an intense, concentrated shot with rich crema.',
+                        time: '25-30 sec',
+                        difficulty: 'Hard',
+                        yield: '1-2 shots',
+                        baseRatio: { coffee: 18, water: 36 },
+                        equipment: [
+                            'Espresso machine',
+                            'Portafilter',
+                            'Tamper',
+                            'Digital scale',
+                            'Grinder (burr)',
+                            'Shot glasses'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Grind coffee fine and dose 18g into portafilter. Level and tamp firmly.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'Lock portafilter and place cup underneath. Start extraction.',
+                                time: '0:15 - 0:20'
+                            },
+                            {
+                                instruction: 'Extract for 25-30 seconds to yield 36g (2:1 ratio).',
+                                time: '0:20 - 0:50'
+                            },
+                            {
+                                instruction: 'Stop extraction when you reach target weight. Serve immediately.',
+                                time: '0:50 - 1:00'
+                            }
+                        ],
+                        tips: [
+                            'Use fine grind, adjust based on extraction time',
+                            'Tamp with 30lbs of pressure for even extraction',
+                            'Aim for honey-like flow from portafilter'
+                        ]
+                    }
+                ],
+
+                // Computed properties for recipe calculations
+                get calculatedCoffee() {
+                    if (!this.selectedMethod) return 0;
+                    return Math.round(this.selectedMethod.baseRatio.coffee * this.servings * this.strengthMultiplier);
+                },
+
+                get calculatedWater() {
+                    if (!this.selectedMethod) return 0;
+                    return Math.round(this.selectedMethod.baseRatio.water * this.servings);
+                },
+
+                // Navigation methods
+                selectMethod(method) {
+                    this.selectedMethod = method;
+                    this.currentView = 'recipe';
+                    this.resetTimer();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+
+                goHome() {
+                    this.currentView = 'home';
+                    this.selectedMethod = null;
+                    this.resetTimer();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+
+                // Recipe calculator methods
+                adjustServings(delta) {
+                    const newServings = this.servings + delta;
+                    if (newServings >= 1 && newServings <= 6) {
+                        this.servings = newServings;
+                    }
+                },
+
+                // Timer functionality
+                toggleTimer() {
+                    if (this.timerActive) {
+                        this.stopTimer();
+                    } else {
+                        this.startTimer();
+                    }
+                },
+
+                startTimer() {
+                    this.timerActive = true;
+                    this.currentTime = 0;
+                    this.currentStep = 0;
+                    
+                    this.timerInterval = setInterval(() => {
+                        this.currentTime++;
+                        this.updateCurrentStep();
+                    }, 1000);
+                },
+
+                stopTimer() {
+                    this.timerActive = false;
+                    if (this.timerInterval) {
+                        clearInterval(this.timerInterval);
+                        this.timerInterval = null;
+                    }
+                },
+
+                resetTimer() {
+                    this.stopTimer();
+                    this.currentTime = 0;
+                    this.currentStep = 0;
+                },
+
+                updateCurrentStep() {
+                    // Simple step progression based on time
+                    // You can enhance this with actual step timings
+                    if (!this.selectedMethod) return;
+                    
+                    const totalSteps = this.selectedMethod.steps.length;
+                    const stepDuration = 60; // 60 seconds per step (adjust as needed)
+                    
+                    const newStep = Math.min(
+                        Math.floor(this.currentTime / stepDuration),
+                        totalSteps - 1
+                    );
+                    
+                    this.currentStep = newStep;
+                },
+
+                formatTime(seconds) {
+                    const mins = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    return `${mins}:${secs.toString().padStart(2, '0')}`;
+                },
+
+                // Initialize the app
+                init() {
+                    // Any initialization logic can go here
+                    console.log('Coffee Brewing Guide initialized! ☕');
+                }
+            }
+        }
+    </script>
 </body>
 </html>
