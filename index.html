@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brew Perfect - Coffee Brewing Guide</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,7 +148,7 @@
                         <template x-for="method in brewingMethods" :key="method.id">
                             <div 
                                 @click="selectMethod(method)"
-                                class="group cursor-pointer bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-cream-soft hover:shadow-cream-elevated transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
+                                class="group cursor-pointer bg-white rounded-4xl p-6 sm:p-8 shadow-cream-soft hover:shadow-cream-elevated transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
                             >
                                 <!-- Blue Circle Icon -->
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full mb-4 sm:mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -378,7 +378,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="flex-shrink-0 w-full max-w-5xl mx-auto py-8 sm:py-12 text-center border-t border-cream-200">
+        <footer class="flex-shrink-0 w-full  max-w-5xl mx-auto py-8 sm:py-12 text-center border-t border-cream-200">
             <p class="text-cream-600 text-sm sm:text-base">Made with coffee and love</p>
         </footer>
     </main>
