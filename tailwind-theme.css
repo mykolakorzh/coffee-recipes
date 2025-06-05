@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Sora", system-ui, sans-serif;
+
+  /* Cream palette */
+  --color-cream-25: #F6F1EF;
+  --color-cream-50: #F2ECE8;
+  --color-cream-100: #EDE5E0;
+  --color-cream-200: #E4D7CF;
+  --color-cream-300: #D7C5B8;
+  --color-cream-400: #C7AE9E;
+  --color-cream-500: #B59485;
+  --color-cream-600: #A07B6B;
+  --color-cream-700: #8A6454;
+  --color-cream-800: #6F4E3F;
+  --color-cream-900: #5A3D30;
+  --color-cream-950: #4A3228;
+
+  /* Shadows */
+  
+
+
+
+
+} 

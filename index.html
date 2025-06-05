@@ -4,60 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brew Perfect - Coffee Brewing Guide</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="dist/output.css" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <script>
-        // Tailwind configuration for monochromatic cream design system
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'sans': ['Sora', 'system-ui', 'sans-serif']
-                    },
-                    colors: {
-                        // Monochromatic cream palette 
-                        cream: {
-                            25: '#F6F1EF',
-                            50: '#F2ECE8', 
-                            100: '#EDE5E0',
-                            200: '#E4D7CF',
-                            300: '#D7C5B8',
-                            400: '#C7AE9E',
-                            500: '#B59485',
-                            600: '#A07B6B',  
-                            700: '#8A6454',  
-                            800: '#6F4E3F',  
-                            900: '#5A3D30',  
-                            950: '#4A3228'  
-                        }
-                    },
-                    boxShadow: {
-                        'card': '0 1px 3px rgba(90, 61, 48, 0.08), 0 1px 2px rgba(90, 61, 48, 0.04)',
-                        'card-hover': '0 4px 6px rgba(90, 61, 48, 0.06), 0 2px 4px rgba(90, 61, 48, 0.04)',
-                        'cream-soft': `
-                            inset 0 1px 0 rgba(255, 255, 255, 0.15),
-                            inset 0 -1px 0 rgba(181, 148, 133, 0.08),
-                            0 4px 8px rgba(90, 61, 48, 0.06)
-                        `,
-                        'cream-elevated': `
-                            inset 0 2px 4px rgba(255, 255, 255, 0.2),
-                            inset 0 -1px 2px rgba(181, 148, 133, 0.1),
-                            0 8px 20px rgba(90, 61, 48, 0.08)
-                        `,
-                        'cream-pressed': `
-                            inset 0 2px 4px rgba(90, 61, 48, 0.12),
-                            inset 0 -1px 2px rgba(255, 255, 255, 0.08),
-                            0 1px 3px rgba(90, 61, 48, 0.06)
-                        `
-                    }
-                }
-            }
-        }
-    </script>
 </head>
 
 <body class="bg-cream-25 min-h-screen font-sans" x-data="coffeeApp()">
@@ -70,7 +21,7 @@
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <!-- Brand Header (nav only, always visible) -->
                 <div class="flex justify-center mb-20 pt-8">
-                    <div class="flex items-center space-x-3 sm:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-cream-200 shadow-cream-soft">
+                    <div class="flex items-center space-x-3 sm:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 sm:px-6 py-2 sm:py-3 border border-cream-200 shadow-sm">
                         <!-- Coffee Icon -->
                         <div class="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-br from-cream-500 to-cream-700 rounded-full flex items-center justify-center">
                             <span class="text-cream-50 font-bold text-xs sm:text-sm">☕</span>
@@ -113,13 +64,12 @@
             x-transition:enter-start="opacity-0 transform -translate-y-4"
             x-transition:enter-end="opacity-100 transform translate-y-0"
         >
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-[120px]">
                 <!-- Back to Methods button (aligned with recipe content) -->
                 <div class="mb-6">
                     <button 
                         @click="goHome()"
-                        class="flex items-center space-x-2 px-4 py-2 text-cream-600 hover:text-cream-800 transition-colors duration-200 bg-cream-50/90 rounded-lg shadow-cream-soft"
-                    >
+                        class="flex items-center space-x-2 px-4 py-2 text-cream-600 hover:text-cream-800 transition-colors duration-200 bg-cream-50/90 rounded-lg shadow-sm">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
@@ -131,7 +81,7 @@
 
         <!-- Main Content Area -->
         <div class="flex-1">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <div class="px-4 sm:px-6 lg:px-[120px] py-6 sm:py-8">
                 
                 <!-- Home View: Method Grid -->
                 <div 
@@ -144,11 +94,11 @@
                     x-transition:leave-end="opacity-0"
                 >
                     <!-- Brewing Methods Grid - Responsive columns -->
-                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto">
+                    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mx-auto">
                         <template x-for="method in brewingMethods" :key="method.id">
                             <div 
                                 @click="selectMethod(method)"
-                                class="group cursor-pointer bg-white rounded-4xl p-6 sm:p-8 shadow-cream-soft hover:shadow-cream-elevated transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
+                                class="group cursor-pointer bg-white rounded-4xl sm:p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
                             >
                                 <!-- Blue Circle Icon -->
                                 <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full mb-4 sm:mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -179,7 +129,7 @@
                     <div x-show="selectedMethod" class="max-w-4xl mx-auto">
                         
                         <!-- Recipe Header -->
-                        <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-cream-soft border border-cream-200 mb-6 sm:mb-8">
+                        <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-sm border border-cream-200 mb-6 sm:mb-8">
                             <div class="flex items-start justify-between mb-4 sm:mb-6">
                                 <div>
                                     <h1 class="text-2xl sm:text-3xl font-bold text-cream-950 mb-2" x-text="selectedMethod?.name"></h1>
@@ -206,7 +156,7 @@
                         </div>
 
                         <!-- Interactive Recipe Calculator -->
-                        <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-cream-soft border border-cream-200 mb-6 sm:mb-8">
+                        <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-sm border border-cream-200 mb-6 sm:mb-8">
                             <h2 class="text-lg sm:text-xl font-semibold text-cream-900 mb-4 sm:mb-6">Recipe Calculator</h2>
                             
                             <div class="grid sm:grid-cols-2 gap-6 sm:gap-8">
@@ -216,7 +166,7 @@
                                     <div class="flex items-center space-x-3 sm:space-x-4">
                                         <button 
                                             @click="adjustServings(-1)"
-                                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-cream-soft"
+                                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-sm"
                                             :disabled="servings <= 1"
                                         >
                                             <span class="text-cream-700 font-bold">-</span>
@@ -227,7 +177,7 @@
                                         </div>
                                         <button 
                                             @click="adjustServings(1)"
-                                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-cream-soft"
+                                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-sm"
                                             :disabled="servings >= 6"
                                         >
                                             <span class="text-cream-700 font-bold">+</span>
@@ -257,7 +207,7 @@
                             </div>
 
                             <!-- Calculated Recipe -->
-                            <div class="mt-6 sm:mt-8 p-4 sm:p-6 bg-cream-100 rounded-lg sm:rounded-xl border border-cream-200 shadow-cream-soft">
+                            <div class="mt-6 sm:mt-8 p-4 sm:p-6 bg-cream-100 rounded-lg sm:rounded-xl border border-cream-200 shadow-sm">
                                 <h3 class="font-semibold text-cream-900 mb-3 sm:mb-4">Your Recipe</h3>
                                 <div class="grid grid-cols-2 gap-3 sm:gap-4">
                                     <div class="transition-all duration-300">
@@ -275,7 +225,7 @@
                         <!-- Equipment & Ingredients -->
                         <div class="grid sm:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
                             <!-- Equipment -->
-                            <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-cream-soft border border-cream-200">
+                            <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm border border-cream-200">
                                 <h3 class="font-semibold text-cream-900 mb-3 sm:mb-4">Equipment Needed</h3>
                                 <ul class="space-y-2">
                                     <template x-for="item in selectedMethod?.equipment" :key="item">
@@ -288,7 +238,7 @@
                             </div>
 
                             <!-- Ingredients -->
-                            <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-cream-soft border border-cream-200">
+                            <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm border border-cream-200">
                                 <h3 class="font-semibold text-cream-900 mb-3 sm:mb-4">What You'll Need</h3>
                                 <div class="space-y-3">
                                     <div class="flex justify-between transition-all duration-300">
@@ -304,12 +254,12 @@
                         </div>
 
                         <!-- Brewing Steps with Timer -->
-                        <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-cream-soft border border-cream-200 mb-6 sm:mb-8">
+                        <div class="bg-cream-50 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-sm border border-cream-200 mb-6 sm:mb-8">
                             <div class="flex items-center justify-between mb-4 sm:mb-6">
                                 <h3 class="text-lg sm:text-xl font-semibold text-cream-900">Brewing Steps</h3>
                                 <button 
                                     @click="toggleTimer()"
-                                    class="px-3 sm:px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-lg transition-all duration-200 font-medium hover:scale-105 active:scale-95 shadow-cream-elevated active:shadow-cream-pressed text-sm sm:text-base"
+                                    class="px-3 sm:px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-lg transition-all duration-200 font-medium hover:scale-105 active:scale-95 shadow-md active:shadow-sm text-sm sm:text-base"
                                     x-text="timerActive ? 'Stop Timer' : 'Start Timer'"
                                 ></button>
                             </div>
@@ -317,7 +267,7 @@
                             <!-- Timer Display -->
                             <div 
                                 x-show="timerActive" 
-                                class="mb-4 sm:mb-6 p-4 bg-cream-100 rounded-lg sm:rounded-xl border border-cream-200 shadow-cream-soft"
+                                class="mb-4 sm:mb-6 p-4 bg-cream-100 rounded-lg sm:rounded-xl border border-cream-200 shadow-sm"
                                 x-transition:enter="transition ease-out duration-300"
                                 x-transition:enter-start="opacity-0 transform scale-95"
                                 x-transition:enter-end="opacity-100 transform scale-100"
@@ -344,10 +294,10 @@
                                 <template x-for="(step, index) in selectedMethod?.steps" :key="index">
                                     <div 
                                         class="flex space-x-3 sm:space-x-4 p-3 sm:p-4 rounded-lg sm:rounded-xl transition-all duration-300"
-                                        :class="timerActive && index === currentStep ? 'bg-cream-100 border border-cream-300 scale-105 shadow-cream-soft' : 'bg-cream-25 hover:bg-cream-50'"
+                                        :class="timerActive && index === currentStep ? 'bg-cream-100 border border-cream-300 scale-105 shadow-sm' : 'bg-cream-25 hover:bg-cream-50'"
                                     >
                                         <div 
-                                            class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-cream-soft text-sm sm:text-base"
+                                            class="flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-sm text-sm sm:text-base"
                                             :class="timerActive && index <= currentStep ? 'bg-cream-600 text-cream-50 animate-pulse' : 'bg-cream-200 text-cream-800'"
                                             x-text="index + 1"
                                         ></div>
@@ -361,7 +311,7 @@
                         </div>
 
                         <!-- Pro Tips -->
-                        <div class="bg-gradient-to-r from-cream-50 to-cream-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 border border-cream-200 shadow-cream-soft">
+                        <div class="bg-gradient-to-r from-cream-50 to-cream-100 rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-sm border border-cream-200">
                             <h3 class="font-semibold text-cream-900 mb-3 sm:mb-4 flex items-center">
                                 <span class="text-lg sm:text-xl mr-2 animate-bounce">💡</span>
                                 Pro Tips
@@ -377,10 +327,21 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="flex-shrink-0 w-full  max-w-5xl mx-auto py-8 sm:py-12 text-center border-t border-cream-200">
-            <p class="text-cream-600 text-sm sm:text-base">Made with coffee and love</p>
+       <!-- Footer -->
+        <footer class="w-full text-center py-8 sm:py-12 px-4 sm:px-6 md:px-[120px]">
+            <!-- Full-width divider -->
+            <div class="w-full h-px bg-cream-200">
+                <div class="max-w-4xl mx-auto h-full"></div>
+            </div>
+            
+            <!-- Footer content -->
+            <div>
+                <div class="max-w-4xl mx-auto md:mt-8">
+                    <p class="text-cream-600 text-sm sm:text-base">Made with coffee and love</p>
+                </div>
+            </div>
         </footer>
+
     </main>
 
     <script>
