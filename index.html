@@ -98,11 +98,11 @@
                         <template x-for="method in brewingMethods" :key="method.id">
                             <div 
                                 @click="selectMethod(method)"
-                                class="group cursor-pointer bg-white rounded-4xl sm:p-8 shadow-sm hover:shadow-md transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
+                                class="p-6 gap-4 group cursor-pointer bg-white rounded-4xl shadow-sm hover:shadow-md transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
                             >
-                                <!-- Blue Circle Icon -->
-                                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full mb-4 sm:mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full"></div>
+                                <!-- Method Icon -->
+                                <div class="size-12 lg:size-20 mb-4 flex group-hover:scale-110 transition-transform duration-300">
+                                    <img src="assets/Aeropress.png" alt="Aeropress">
                                 </div>
                                 
                                 <!-- Method Info -->
