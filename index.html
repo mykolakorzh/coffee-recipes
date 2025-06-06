@@ -101,8 +101,8 @@
                                 class="p-6 gap-4 group cursor-pointer bg-white rounded-4xl shadow-sm hover:shadow-md transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
                             >
                                 <!-- Method Icon -->
-                                <div class="size-12 lg:size-20 mb-4 flex group-hover:scale-110 transition-transform duration-300">
-                                    <img src="assets/Aeropress.png" alt="Aeropress">
+                                <div class="flex size-12 lg:size-20 mb-4 group-hover:scale-110 transition-transform duration-300">
+                                    <img :src="method.id === 'cold-brew' ? 'assets/Coldbrew.png' : (method.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + method.id.replace('-', '').charAt(0).toUpperCase() + method.id.replace('-', '').slice(1) + '.png')" :alt="method.name" class="w-full h-full object-contain">
                                 </div>
                                 
                                 <!-- Method Info -->
@@ -361,6 +361,90 @@
                 // Brewing methods data - updated to match Figma exactly
                 brewingMethods: [
                     {
+                        id: 'aeropress',
+                        name: 'AeroPress',
+                        icon: '🔄',
+                        description: 'Clean, bright, and nuanced flavors',
+                        longDescription: 'AeroPress creates a full-bodied, smooth cup with lower acidity than most brewing methods.',
+                        time: '1:45 min',
+                        difficulty: 'Easy',
+                        yield: '1 cup',
+                        baseRatio: { coffee: 17, water: 250 },
+                        equipment: [
+                            'AeroPress brewer',
+                            'AeroPress filters',
+                            'Stirring paddle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Insert filter into cap and rinse. Assemble AeroPress in standard position.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Add ground coffee and pour hot water (85°C). Stir gently.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'Steep for 1 minute, then attach cap and flip onto cup.',
+                                time: '0:15 - 1:15'
+                            },
+                            {
+                                instruction: 'Press plunger down slowly and steadily for 20-30 seconds.',
+                                time: '1:15 - 1:45'
+                            }
+                        ],
+                        tips: [
+                            'Use a fine to medium grind',
+                            'Experiment with inverted method for longer steeping',
+                            'Press slowly and consistently for best extraction'
+                        ]
+                    },
+                    {
+                        id: 'chemex',
+                        name: 'Chemex',
+                        icon: '⏳',
+                        description: 'Clean, bright, and nuanced flavors',
+                        longDescription: 'Chemex filters remove oils and fine particles, resulting in a very clean, tea-like cup.',
+                        time: '3-5 min',
+                        difficulty: 'Medium',
+                        yield: '2-4 cups',
+                        baseRatio: { coffee: 30, water: 500 },
+                        equipment: [
+                            'Chemex brewer',
+                            'Chemex bonded filters',
+                            'Gooseneck kettle',
+                            'Digital scale',
+                            'Grinder',
+                            'Timer'
+                        ],
+                        steps: [
+                            {
+                                instruction: 'Place filter with 3-layer side against spout. Rinse with hot water and empty.',
+                                time: '0:00 - 0:30'
+                            },
+                            {
+                                instruction: 'Add coffee and create well. Start timer, pour 2x coffee weight for bloom.',
+                                time: '0:00 - 0:15'
+                            },
+                            {
+                                instruction: 'After 45 seconds, pour in slow circles reaching total weight by 3:30.',
+                                time: '0:45 - 3:30'
+                            },
+                            {
+                                instruction: 'Let coffee finish dripping completely.',
+                                time: '3:30 - 5:00'
+                            }
+                        ],
+                        tips: [
+                            'Use medium-coarse grind, coarser than V60',
+                            'Pour very slowly to avoid over-extraction',
+                            'The thick filter removes most oils and sediment'
+                        ]
+                    },
+                    {
                         id: 'v60',
                         name: 'Hario V60',
                         icon: '🌀',
@@ -403,87 +487,44 @@
                         ]
                     },
                     {
-                        id: 'aeropress',
-                        name: 'AeroPress',
-                        icon: '🔄',
+                        id: 'cold-brew',
+                        name: 'Cold brew',
+                        icon: '🧊',
                         description: 'Clean, bright, and nuanced flavors',
-                        longDescription: 'AeroPress creates a full-bodied, smooth cup with lower acidity than most brewing methods.',
-                        time: '3-4 min',
+                        longDescription: 'Long extraction time creates a smooth, naturally sweet concentrate with low acidity.',
+                        time: '12-24 hours',
                         difficulty: 'Easy',
-                        yield: '1 cup',
-                        baseRatio: { coffee: 17, water: 250 },
+                        yield: '4-6 cups',
+                        baseRatio: { coffee: 100, water: 1000 },
                         equipment: [
-                            'AeroPress brewer',
-                            'AeroPress filters',
-                            'Stirring paddle',
+                            'Large jar or cold brew maker',
+                            'Fine mesh strainer',
+                            'Cheesecloth or paper filter',
                             'Digital scale',
-                            'Grinder',
-                            'Timer'
+                            'Grinder'
                         ],
                         steps: [
                             {
-                                instruction: 'Insert filter into cap and rinse. Assemble AeroPress in standard position.',
-                                time: '0:00 - 0:30'
+                                instruction: 'Grind coffee coarsely and combine with room temperature water in jar.',
+                                time: '0:00 - 0:05'
                             },
                             {
-                                instruction: 'Add ground coffee and pour hot water (85°C). Stir gently.',
-                                time: '0:00 - 0:15'
+                                instruction: 'Stir well to ensure all grounds are saturated.',
+                                time: '0:05 - 0:10'
                             },
                             {
-                                instruction: 'Steep for 1 minute, then attach cap and flip onto cup.',
-                                time: '0:15 - 1:15'
+                                instruction: 'Cover and steep at room temperature for 12-24 hours.',
+                                time: '12-24 hours'
                             },
                             {
-                                instruction: 'Press down slowly and steadily for 20-30 seconds.',
-                                time: '1:15 - 1:45'
+                                instruction: 'Strain through fine mesh and filter. Dilute concentrate 1:1 with water or milk.',
+                                time: '24:00 - 24:10'
                             }
                         ],
                         tips: [
-                            'Use a fine to medium grind',
-                            'Experiment with inverted method for longer steeping',
-                            'Press slowly and consistently for best extraction'
-                        ]
-                    },
-                    {
-                        id: 'chemex',
-                        name: 'Chemex',
-                        icon: '⏳',
-                        description: 'Clean, bright, and nuanced flavors',
-                        longDescription: 'Chemex filters remove oils and fine particles, resulting in a very clean, tea-like cup.',
-                        time: '3-4 min',
-                        difficulty: 'Medium',
-                        yield: '2-4 cups',
-                        baseRatio: { coffee: 30, water: 500 },
-                        equipment: [
-                            'Chemex brewer',
-                            'Chemex bonded filters',
-                            'Gooseneck kettle',
-                            'Digital scale',
-                            'Grinder',
-                            'Timer'
-                        ],
-                        steps: [
-                            {
-                                instruction: 'Place filter with 3-layer side against spout. Rinse with hot water and empty.',
-                                time: '0:00 - 0:30'
-                            },
-                            {
-                                instruction: 'Add coffee and create well. Start timer, pour 2x coffee weight for bloom.',
-                                time: '0:00 - 0:15'
-                            },
-                            {
-                                instruction: 'After 45 seconds, pour in slow circles reaching total weight by 3:30.',
-                                time: '0:45 - 3:30'
-                            },
-                            {
-                                instruction: 'Let coffee finish dripping completely.',
-                                time: '3:30 - 5:00'
-                            }
-                        ],
-                        tips: [
-                            'Use medium-coarse grind, coarser than V60',
-                            'Pour very slowly to avoid over-extraction',
-                            'The thick filter removes most oils and sediment'
+                            'Use very coarse grind to make straining easier',
+                            'Longer steeping time (18-24h) creates stronger concentrate',
+                            'Store concentrate in refrigerator for up to 2 weeks'
                         ]
                     },
                     {
@@ -529,53 +570,12 @@
                         ]
                     },
                     {
-                        id: 'cold-brew',
-                        name: 'Cold brew',
-                        icon: '🧊',
-                        description: 'Clean, bright, and nuanced flavors',
-                        longDescription: 'Long extraction time creates a smooth, naturally sweet concentrate with low acidity.',
-                        time: '3-4 min',
-                        difficulty: 'Easy',
-                        yield: '4-6 cups',
-                        baseRatio: { coffee: 100, water: 1000 },
-                        equipment: [
-                            'Large jar or cold brew maker',
-                            'Fine mesh strainer',
-                            'Cheesecloth or paper filter',
-                            'Digital scale',
-                            'Grinder'
-                        ],
-                        steps: [
-                            {
-                                instruction: 'Grind coffee coarsely and combine with room temperature water in jar.',
-                                time: '0:00 - 0:05'
-                            },
-                            {
-                                instruction: 'Stir well to ensure all grounds are saturated.',
-                                time: '0:05 - 0:10'
-                            },
-                            {
-                                instruction: 'Cover and steep at room temperature for 12-24 hours.',
-                                time: '12-24 hours'
-                            },
-                            {
-                                instruction: 'Strain through fine mesh and filter. Dilute concentrate 1:1 with water or milk.',
-                                time: '24:00 - 24:10'
-                            }
-                        ],
-                        tips: [
-                            'Use very coarse grind to make straining easier',
-                            'Longer steeping time (18-24h) creates stronger concentrate',
-                            'Store concentrate in refrigerator for up to 2 weeks'
-                        ]
-                    },
-                    {
                         id: 'french-press',
                         name: 'French press',
                         icon: '☕',
                         description: 'Clean, bright, and nuanced flavors',
                         longDescription: 'Immersion brewing creates a full-bodied, rich cup with oils and fine particles.',
-                        time: '3-4 min',
+                        time: '4-5 min',
                         difficulty: 'Easy',
                         yield: '2-4 cups',
                         baseRatio: { coffee: 30, water: 500 },
@@ -601,7 +601,7 @@
                                 time: '0:30 - 4:30'
                             },
                             {
-                                instruction: 'Press plunger down slowly and serve immediately.',
+                                instruction: 'Press plunger down slowly and steadily for 20-30 seconds.',
                                 time: '4:30 - 5:00'
                             }
                         ],
