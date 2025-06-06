@@ -21,7 +21,7 @@
             <div class="max-w-6xl mx-auto px-4 md:px-8">
                 <!-- Brand Header (nav only, always visible) -->
                 <div class="flex justify-center mb-20 pt-8">
-                    <div class="flex items-center space-x-3 md:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 border border-cream-200 shadow-sm">
+                    <div class="flex items-center space-x-3 md:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]">
                         <!-- Coffee Icon -->
                         <div class="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-cream-500 to-cream-700 rounded-full flex items-center justify-center">
                             <span class="text-cream-50 font-bold text-xs md:text-sm">☕</span>
@@ -98,7 +98,7 @@
                         <template x-for="method in brewingMethods" :key="method.id">
                             <div 
                                 @click="selectMethod(method)"
-                                class="flex items-center p-6 gap-4 group cursor-pointer bg-white rounded-4xl shadow-sm hover:shadow-md transition-all duration-300 border border-cream-200 hover:border-cream-300 hover:-translate-y-1"
+                                class="flex items-center p-6 gap-4 group cursor-pointer bg-white rounded-4xl transition-all duration-300 hover:border-cream-300 hover:-translate-y-1 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]"
                             >
                                 <!-- Method Icon -->
                                 <div class="flex w-9 h-16 group-hover:scale-110 transition-transform duration-300">
