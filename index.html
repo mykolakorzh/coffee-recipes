@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="assets/Favicon.png" type="image/x-icon">
     <!-- Hotjar Tracking Code for Portfolio website -->
 <script>
     (function(h,o,t,j,a,r){
@@ -25,7 +26,7 @@
 <body class="bg-cream-25 min-h-screen font-sans" x-data="coffeeApp()">
     
     <!-- Main Content Container -->
-    <main class="min-h-screen flex flex-col">
+    <main class="min-h-screen flex flex-col justify-between">
         
         <!-- Header Section with Brand Info (always visible) -->
         <div class="relative">
@@ -47,7 +48,7 @@
                         <!-- Divider -->
                         <div class="w-px h-4 md:h-6 bg-cream-300"></div>
                         <!-- Author Info -->
-                         <a href="https://www.linkedin.com/in/mykolakorzh/" target="_blank">
+                         <a href="https://mykolakorzh.design/" target="_blank">
                             <div class="flex items-center gap-2">
                                 <img class="rounded-full size-6 md:size-8" src="assets/AuthorPhoto.png" alt="">
                                 <span class="text-cream-600 text-xs md:text-sm">By <span class="font-medium">Mykola</span></span>
@@ -377,13 +378,13 @@
                 currentStep: 0,
                 timerInterval: null,
 
-                // Brewing methods data - updated to match Figma exactly
+                // Brewing methods data
                 brewingMethods: [
                     {
                         id: 'aeropress',
                         name: 'AeroPress',
                         icon: '🔄',
-                        description: 'Clean, bright, and nuanced flavors',
+                        description: 'Full-bodied with low acidity profile',
                         longDescription: 'AeroPress creates a full-bodied, smooth cup with lower acidity than most brewing methods.',
                         time: '1:45 min',
                         difficulty: 'Easy',
@@ -425,7 +426,7 @@
                         id: 'chemex',
                         name: 'Chemex',
                         icon: '⏳',
-                        description: 'Clean, bright, and nuanced flavors',
+                        description: 'Tea-like clarity with bright notes',
                         longDescription: 'Chemex filters remove oils and fine particles, resulting in a very clean, tea-like cup.',
                         time: '3-5 min',
                         difficulty: 'Medium',
@@ -467,7 +468,7 @@
                         id: 'v60',
                         name: 'Hario V60',
                         icon: '🌀',
-                        description: 'Clean, bright, and nuanced flavors',
+                        description: 'Complex flavors with crisp finish',
                         longDescription: 'The V60 produces a clean, bright cup that highlights the unique characteristics of your coffee beans.',
                         time: '3-4 min',
                         difficulty: 'Medium',
@@ -509,7 +510,7 @@
                         id: 'cold-brew',
                         name: 'Cold brew',
                         icon: '🧊',
-                        description: 'Clean, bright, and nuanced flavors',
+                        description: 'Smooth concentrate with sweet notes',
                         longDescription: 'Long extraction time creates a smooth, naturally sweet concentrate with low acidity.',
                         time: '12-24 hours',
                         difficulty: 'Easy',
@@ -550,7 +551,7 @@
                         id: 'kalita',
                         name: 'Kalita wave',
                         icon: '🌊',
-                        description: 'Clean, bright, and nuanced flavors',
+                        description: 'Balanced extraction with consistency',
                         longDescription: 'The flat-bottom design provides even extraction and a well-balanced, forgiving cup.',
                         time: '3-4 min',
                         difficulty: 'Easy',
@@ -592,7 +593,7 @@
                         id: 'french-press',
                         name: 'French press',
                         icon: '☕',
-                        description: 'Clean, bright, and nuanced flavors',
+                        description: 'Rich body with bold character',
                         longDescription: 'Immersion brewing creates a full-bodied, rich cup with oils and fine particles.',
                         time: '4-5 min',
                         difficulty: 'Easy',
