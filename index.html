@@ -32,7 +32,7 @@
             <div class="max-w-6xl mx-auto md:px-8">
                 <!-- Brand Header -->
                 <div class="flex justify-center mb-16 pt-8">
-                    <div class="flex items-center space-x-3 md:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]">
+                    <div class="flex items-center space-x-3 md:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 transition-all duration-300 hover:-translate-y-1 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]">
                         <!-- Logo -->
                          <a href="index.html">
                             <div
@@ -40,7 +40,7 @@
                             <div class="size-6 md:size-8 flex items-center justify-center">
                                 <img src="assets/CoffeeLogo.png" alt="Logo">
                             </div>
-                            <span class="font-medium text-sm md:text-base text-cream-800">Perfect Brew</span>
+                            <span class="font-medium text-sm md:text-base text-cream-800">BrewEasy</span>
                          </div>
                          </a>
                          
@@ -117,7 +117,7 @@
                         <template x-for="method in brewingMethods" :key="method.id">
                             <div 
                                 @click="selectMethod(method)"
-                                class="flex items-center p-6 gap-4 group cursor-pointer bg-white rounded-4xl transition-all duration-300 hover:border-cream-300 hover:-translate-y-1 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]"
+                                class="flex items-center p-6 gap-4 group cursor-pointer bg-white rounded-4xl transition-all duration-300 hover:-translate-y-1 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]"
                             >
                                 <!-- Method Icon -->
                                 <div class="flex w-9 h-16 group-hover:scale-110 transition-transform duration-300">
