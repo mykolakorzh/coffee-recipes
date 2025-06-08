@@ -11,7 +11,6 @@
     <link rel="canonical" href="https://breweasy.coffee">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/Apple Touch Icon.png">
     <link href="dist/output.css" rel="stylesheet">
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +23,7 @@
     <main class="min-h-screen flex flex-col justify-between">
         
         <!-- Header Section with Brand Info (always visible) -->
-        <div class="relative">
+        <div class="relative animate-section" data-delay="1">
             <div class="max-w-6xl mx-auto md:px-8">
                 <!-- Brand Header -->
                 <div class="flex justify-center mb-16 pt-8">
@@ -57,16 +56,16 @@
         </div>
 
         <!-- Hero Section (only on home view) -->
-        <div x-show="currentView === 'home'" class="text-center mb-16 px-4">
-            <h1 class="text-4xl md:text-5xl font-bold text-cream-900 mb-4 md:mb-5 leading-tight">
-                Perfect Coffee, Every Time
+        <div x-show="currentView === 'home'" class="text-center mb-16 px-4 animate-section" data-delay="0.2">
+            <h1 class="text-4xl md:text-5xl font-bold text-cream-900 mb-4 md:mb-5 leading-tight tracking-tight">
+                Perfect Coffee, <br class="md:hidden">Every Time
             </h1>
             <div class="max-w-2xl mx-auto">
                 <p class="text-lg md:text-xl text-cream-600 mb-2">
-                    Quickly find any coffee recipe that you need to start this morning.
+                    Quickly find any coffee recipe <br class="md:hidden">that you need to start this morning.
                 </p>
                 <p class="text-lg md:text-xl text-cream-600">
-                    From kalita to aeropress, discover your perfect cup.
+                    From V60 to aeropress,<br class="md:hidden"> discover your perfect cup.
                 </p>
             </div>
         </div>
@@ -75,9 +74,6 @@
         <div 
             x-show="currentView === 'recipe'" 
             class="flex-shrink-0 md:py-4"
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0 transform -translate-y-4"
-            x-transition:enter-end="opacity-100 transform translate-y-0"
         >
             <div class="max-w-4xl mx-auto px-4 md:px-[120px]">
                 <!-- Back to Methods button (aligned with recipe content) -->
@@ -107,6 +103,7 @@
                     x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"
+                    class="animate-section" data-delay="0.4"
                 >
                     <!-- Brewing Methods Grid - Responsive columns -->
                     <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mx-auto">
@@ -343,7 +340,7 @@
         </div>
 
        <!-- Footer -->
-        <footer class="w-full text-center pt-16 pb-8 px-4 md:px-[120px]">
+        <footer class="w-full text-center pt-16 pb-8 px-4 md:px-[120px] animate-section" data-delay="1.0">
             <!-- Full-width divider -->
             <div class="w-full h-px bg-cream-200">
                 <div class="max-w-4xl mx-auto h-full"></div>
@@ -359,6 +356,7 @@
 
     </main>
 
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         // Alpine.js main application logic
         function coffeeApp() {
@@ -715,10 +713,24 @@
                 },
 
                 init() {
+                    window.scrollTo({ top: 0, behavior: 'instant' });
                     console.log('Figma-matched Coffee App initialized! ☕');
                 }
             }
         }
+    </script>
+    <script type="module">
+        import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
+
+        document.querySelectorAll('.animate-section').forEach((element, index) => {
+          const delay = parseFloat(element.dataset.delay || 0);
+
+          animate(
+            element,
+            { opacity: [0, 1], y: [20, 0], scale: [0.8, 1] },
+            { delay: 0.2 + (index * 0.15), duration: 0.8, bounce: 0.2 }
+          );
+        });
     </script>
 </body>
 </html>

@@ -2,5 +2,10 @@
 
 @import "./tailwind-theme.css";
 
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 @theme {
 } 
