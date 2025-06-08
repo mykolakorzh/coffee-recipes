@@ -70,26 +70,6 @@
             </div>
         </div>
 
-        <!-- Recipe Detail Header (when viewing recipe) -->
-        <div 
-            x-show="currentView === 'recipe'" 
-            class="flex-shrink-0 md:py-4"
-        >
-            <div class="max-w-4xl mx-auto px-4 md:px-[120px]">
-                <!-- Back to Methods button (aligned with recipe content) -->
-                <div class="mb-6">
-                    <button 
-                        @click="goHome()"
-                        class="flex items-center space-x-2 px-4 py-2 text-cream-600 hover:text-cream-800 transition-colors duration-200 bg-cream-50/90 rounded-lg shadow-sm">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                        </svg>
-                        <span class="font-medium">Back to Methods</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
         <!-- Main Content Area -->
         <div>
             <div class="px-4 md:px-[120px]">
@@ -132,215 +112,6 @@
                         </template>
                     </section>
                 </div>
-
-                <!-- Recipe Detail View -->
-                <div 
-                    x-show="currentView === 'recipe'" 
-                    x-transition:enter="transition ease-out duration-500"
-                    x-transition:enter-start="opacity-0 transform translate-y-4"
-                    x-transition:enter-end="opacity-100 transform translate-y-0"
-                    x-transition:leave="transition ease-in duration-300"
-                    x-transition:leave-start="opacity-100 transform translate-y-0"
-                    x-transition:leave-end="opacity-0 transform translate-y-4"
-                >
-                    <div x-show="selectedMethod" class="max-w-4xl mx-auto">
-                        
-                        <!-- Recipe Header -->
-                        <div class="bg-cream-50 rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-cream-200 mb-6 md:mb-8">
-                            <div class="flex items-start justify-between mb-4 md:mb-6">
-                                <div>
-                                    <h1 class="text-2xl md:text-3xl font-bold text-cream-950 mb-2" x-text="selectedMethod?.name"></h1>
-                                    <p class="text-cream-700 text-base md:text-lg" x-text="selectedMethod?.longDescription"></p>
-                                </div>
-                                <div class="text-4xl md:text-6xl text-cream-300 animate-pulse" x-text="selectedMethod?.icon"></div>
-                            </div>
-                            
-                            <!-- Recipe Stats -->
-                            <div class="grid grid-cols-3 gap-3 md:gap-4 pt-4 md:pt-6 border-t border-cream-200">
-                                <div class="text-center">
-                                    <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.time"></div>
-                                    <div class="text-xs md:text-sm text-cream-500">Brew Time</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.difficulty"></div>
-                                    <div class="text-xs md:text-sm text-cream-500">Difficulty</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.yield"></div>
-                                    <div class="text-xs md:text-sm text-cream-500">Serves</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Interactive Recipe Calculator -->
-                        <div class="bg-cream-50 rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-cream-200 mb-6 md:mb-8">
-                            <h2 class="text-lg md:text-xl font-semibold text-cream-900 mb-4 md:mb-6">Recipe Calculator</h2>
-                            
-                            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-                                <!-- Serving Size Adjuster -->
-                                <div>
-                                    <label class="block text-sm font-medium text-cream-800 mb-2 md:mb-3">Serving Size</label>
-                                    <div class="flex items-center space-x-3 md:space-x-4">
-                                        <button 
-                                            @click="adjustServings(-1)"
-                                            class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-sm"
-                                            :disabled="servings <= 1"
-                                        >
-                                            <span class="text-cream-700 font-bold">-</span>
-                                        </button>
-                                        <div class="text-center">
-                                            <div class="text-xl md:text-2xl font-bold text-cream-900 transition-all duration-200" x-text="servings"></div>
-                                            <div class="text-xs md:text-sm text-cream-600">cups</div>
-                                        </div>
-                                        <button 
-                                            @click="adjustServings(1)"
-                                            class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-sm"
-                                            :disabled="servings >= 6"
-                                        >
-                                            <span class="text-cream-700 font-bold">+</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Coffee Strength -->
-                                <div>
-                                    <label class="block text-sm font-medium text-cream-800 mb-2 md:mb-3">Coffee Strength</label>
-                                    <div class="space-y-2">
-                                        <input 
-                                            type="range" 
-                                            min="0.8" 
-                                            max="1.2" 
-                                            step="0.1" 
-                                            x-model="strengthMultiplier"
-                                            class="w-full h-2 bg-cream-200 rounded-lg appearance-none cursor-pointer transition-all duration-200"
-                                        >
-                                        <div class="flex justify-between text-xs text-cream-600">
-                                            <span>Mild</span>
-                                            <span>Medium</span>
-                                            <span>Strong</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Calculated Recipe -->
-                            <div class="mt-6 md:mt-8 p-4 md:p-6 bg-cream-100 rounded-lg md:rounded-xl border border-cream-200 shadow-sm">
-                                <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">Your Recipe</h3>
-                                <div class="grid grid-cols-2 gap-3 md:gap-4">
-                                    <div class="transition-all duration-300">
-                                        <span class="text-cream-700">Coffee:</span>
-                                        <span class="font-semibold text-cream-900 ml-2" x-text="calculatedCoffee + 'g'"></span>
-                                    </div>
-                                    <div class="transition-all duration-300">
-                                        <span class="text-cream-700">Water:</span>
-                                        <span class="font-semibold text-cream-900 ml-2" x-text="calculatedWater + 'ml'"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Equipment & Ingredients -->
-                        <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
-                            <!-- Equipment -->
-                            <div class="bg-cream-50 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm border border-cream-200">
-                                <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">Equipment Needed</h3>
-                                <ul class="space-y-2">
-                                    <template x-for="item in selectedMethod?.equipment" :key="item">
-                                        <li class="flex items-center space-x-3 transition-all duration-200 hover:bg-cream-100 rounded-lg p-2 -m-2">
-                                            <div class="w-2 h-2 bg-cream-500 rounded-full"></div>
-                                            <span class="text-cream-800 text-sm md:text-base" x-text="item"></span>
-                                        </li>
-                                    </template>
-                                </ul>
-                            </div>
-
-                            <!-- Ingredients -->
-                            <div class="bg-cream-50 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-sm border border-cream-200">
-                                <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">What You'll Need</h3>
-                                <div class="space-y-3">
-                                    <div class="flex justify-between transition-all duration-300">
-                                        <span class="text-cream-700 text-sm md:text-base">Coffee (medium grind)</span>
-                                        <span class="font-semibold text-cream-900" x-text="calculatedCoffee + 'g'"></span>
-                                    </div>
-                                    <div class="flex justify-between transition-all duration-300">
-                                        <span class="text-cream-700 text-sm md:text-base">Hot water (92-96°C)</span>
-                                        <span class="font-semibold text-cream-900" x-text="calculatedWater + 'ml'"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Brewing Steps with Timer -->
-                        <div class="bg-cream-50 rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-cream-200 mb-6 md:mb-8">
-                            <div class="flex items-center justify-between mb-4 md:mb-6">
-                                <h3 class="text-lg md:text-xl font-semibold text-cream-900">Brewing Steps</h3>
-                                <button 
-                                    @click="toggleTimer()"
-                                    class="px-3 md:px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-lg transition-all duration-200 font-medium hover:scale-105 active:scale-95 shadow-md active:shadow-sm text-sm md:text-base"
-                                    x-text="timerActive ? 'Stop Timer' : 'Start Timer'"
-                                ></button>
-                            </div>
-
-                            <!-- Timer Display -->
-                            <div 
-                                x-show="timerActive" 
-                                class="mb-4 md:mb-6 p-4 bg-cream-100 rounded-lg md:rounded-xl border border-cream-200 shadow-sm"
-                                x-transition:enter="transition ease-out duration-300"
-                                x-transition:enter-start="opacity-0 transform scale-95"
-                                x-transition:enter-end="opacity-100 transform scale-100"
-                                x-transition:leave="transition ease-in duration-200"
-                                x-transition:leave-start="opacity-100 transform scale-100"
-                                x-transition:leave-end="opacity-0 transform scale-95"
-                            >
-                                <div class="text-center">
-                                    <div class="text-2xl md:text-3xl font-bold text-cream-900 mb-2 animate-pulse" x-text="formatTime(currentTime)"></div>
-                                    <div class="text-cream-700 text-sm md:text-base" x-text="'Step ' + (currentStep + 1) + ' of ' + selectedMethod?.steps.length"></div>
-                                </div>
-                                
-                                <!-- Progress Bar -->
-                                <div class="mt-3 md:mt-4 w-full bg-cream-200 rounded-full h-2">
-                                    <div 
-                                        class="bg-cream-600 h-2 rounded-full transition-all duration-500 ease-out"
-                                        :style="'width: ' + ((currentStep + 1) / selectedMethod?.steps.length * 100) + '%'"
-                                    ></div>
-                                </div>
-                            </div>
-
-                            <!-- Steps List -->
-                            <div class="space-y-3 md:space-y-4">
-                                <template x-for="(step, index) in selectedMethod?.steps" :key="index">
-                                    <div 
-                                        class="flex space-x-3 md:space-x-4 p-3 md:p-4 rounded-lg md:rounded-xl transition-all duration-300"
-                                        :class="timerActive && index === currentStep ? 'bg-cream-100 border border-cream-300 scale-105 shadow-sm' : 'bg-cream-25 hover:bg-cream-50'"
-                                    >
-                                        <div 
-                                            class="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-sm text-sm md:text-base"
-                                            :class="timerActive && index <= currentStep ? 'bg-cream-600 text-cream-50 animate-pulse' : 'bg-cream-200 text-cream-800'"
-                                            x-text="index + 1"
-                                        ></div>
-                                        <div class="flex-1">
-                                            <p class="text-cream-900 text-sm md:text-base" x-text="step.instruction"></p>
-                                            <p class="text-xs md:text-sm text-cream-600 mt-1" x-text="step.time"></p>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-                        </div>
-
-                        <!-- Pro Tips -->
-                        <div class="bg-gradient-to-r from-cream-50 to-cream-100 rounded-xl md:rounded-2xl p-6 md:p-8 shadow-sm border border-cream-200">
-                            <h3 class="font-semibold text-cream-900 mb-3 md:mb-4 flex items-center">
-                                <span class="text-lg md:text-xl mr-2 animate-bounce">💡</span>
-                                Pro Tips
-                            </h3>
-                            <div class="space-y-2 md:space-y-3">
-                                <template x-for="tip in selectedMethod?.tips" :key="tip">
-                                    <p class="text-cream-800 text-sm md:text-base transition-all duration-200 hover:text-cream-900" x-text="tip"></p>
-                                </template>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -375,22 +146,22 @@
                 currentTime: 0,
                 currentStep: 0,
                 timerInterval: null,
+                showRecipeDetailModal: false,
 
                 // Brewing methods data
                 brewingMethods: [
                     {
                         id: 'aeropress',
                         name: 'AeroPress',
-                        icon: '🔄',
                         description: 'Full-bodied with low acidity profile',
-                        longDescription: 'AeroPress creates a full-bodied, smooth cup with lower acidity than most brewing methods.',
-                        time: '1:45 min',
+                        longDescription: 'Creates a smooth, rich cup with less bitterness than other methods.',
+                        time: '2 min',
                         difficulty: 'Easy',
-                        yield: '1 cup',
-                        baseRatio: { coffee: 17, water: 250 },
+                        yield: '1 cup (240ml)',
+                        baseRatio: { coffee: 17, water: 240 },
                         equipment: [
                             'AeroPress brewer',
-                            'AeroPress filters',
+                            'AeroPress paper filters',
                             'Stirring paddle',
                             'Digital scale',
                             'Grinder',
@@ -398,38 +169,37 @@
                         ],
                         steps: [
                             {
-                                instruction: 'Insert filter into cap and rinse. Assemble AeroPress in standard position.',
+                                instruction: 'Heat water to 88°C. Rinse filter and assemble AeroPress.',
                                 time: '0:00 - 0:30'
                             },
                             {
-                                instruction: 'Add ground coffee and pour hot water (85°C). Stir gently.',
-                                time: '0:00 - 0:15'
+                                instruction: 'Add coffee, pour all water, and stir 3 times.',
+                                time: '0:30 - 1:00'
                             },
                             {
-                                instruction: 'Steep for 1 minute, then attach cap and flip onto cup.',
-                                time: '0:15 - 1:15'
+                                instruction: 'Attach cap, flip, and press for 30 seconds.',
+                                time: '1:00 - 1:30'
                             },
                             {
-                                instruction: 'Press plunger down slowly and steadily for 20-30 seconds.',
-                                time: '1:15 - 1:45'
+                                instruction: 'Serve immediately.',
+                                time: '1:30 - 2:00'
                             }
                         ],
                         tips: [
-                            'Use a fine to medium grind',
-                            'Experiment with inverted method for longer steeping',
-                            'Press slowly and consistently for best extraction'
+                            'Use medium grind like table salt',
+                            'Press slowly and steadily',
+                            'Clean taste with full body'
                         ]
                     },
                     {
                         id: 'chemex',
                         name: 'Chemex',
-                        icon: '⏳',
                         description: 'Tea-like clarity with bright notes',
-                        longDescription: 'Chemex filters remove oils and fine particles, resulting in a very clean, tea-like cup.',
-                        time: '3-5 min',
+                        longDescription: 'Produces very clean, bright coffee by filtering out oils and fine particles.',
+                        time: '4 min',
                         difficulty: 'Medium',
-                        yield: '2-4 cups',
-                        baseRatio: { coffee: 30, water: 500 },
+                        yield: '2 cups (500ml)',
+                        baseRatio: { coffee: 35, water: 580 },
                         equipment: [
                             'Chemex brewer',
                             'Chemex bonded filters',
@@ -440,38 +210,37 @@
                         ],
                         steps: [
                             {
-                                instruction: 'Place filter with 3-layer side against spout. Rinse with hot water and empty.',
+                                instruction: 'Heat water to 94°C. Rinse thick filter and add coffee.',
                                 time: '0:00 - 0:30'
                             },
                             {
-                                instruction: 'Add coffee and create well. Start timer, pour 2x coffee weight for bloom.',
-                                time: '0:00 - 0:15'
+                                instruction: 'Pour twice the coffee weight, wait 30 seconds.',
+                                time: '0:30 - 1:00'
                             },
                             {
-                                instruction: 'After 45 seconds, pour in slow circles reaching total weight by 3:30.',
-                                time: '0:45 - 3:30'
+                                instruction: 'Pour remaining water slowly in circles.',
+                                time: '1:00 - 3:00'
                             },
                             {
-                                instruction: 'Let coffee finish dripping completely.',
-                                time: '3:30 - 5:00'
+                                instruction: 'Let drip finish completely.',
+                                time: '3:00 - 4:00'
                             }
                         ],
                         tips: [
-                            'Use medium-coarse grind, coarser than V60',
-                            'Pour very slowly to avoid over-extraction',
-                            'The thick filter removes most oils and sediment'
+                            'Use medium-coarse grind like sea salt',
+                            'Pour very slowly to control extraction',
+                            'Thick filters create clean taste'
                         ]
                     },
                     {
                         id: 'v60',
                         name: 'Hario V60',
-                        icon: '🌀',
                         description: 'Complex flavors with crisp finish',
-                        longDescription: 'The V60 produces a clean, bright cup that highlights the unique characteristics of your coffee beans.',
-                        time: '3-4 min',
+                        longDescription: 'Highlights unique coffee characteristics with bright, clean flavors.',
+                        time: '3 min',
                         difficulty: 'Medium',
-                        yield: '1-2 cups',
-                        baseRatio: { coffee: 20, water: 300 },
+                        yield: '1 cup (300ml)',
+                        baseRatio: { coffee: 20, water: 320 },
                         equipment: [
                             'Hario V60 dripper',
                             'V60 paper filters',
@@ -482,79 +251,77 @@
                         ],
                         steps: [
                             {
-                                instruction: 'Heat water to 92-96°C and rinse the filter in the V60. Place on scale and zero.',
+                                instruction: 'Heat water to 93°C. Rinse filter and add coffee.',
                                 time: '0:00 - 0:30'
                             },
                             {
-                                instruction: 'Add ground coffee and create a small well in the center. Start timer and pour 2x coffee weight in water.',
-                                time: '0:00 - 0:15'
+                                instruction: 'Pour twice the coffee weight, wait 30 seconds.',
+                                time: '0:30 - 1:00'
                             },
                             {
-                                instruction: 'Let coffee bloom for 30 seconds, then begin slow, circular pours.',
-                                time: '0:30 - 2:30'
+                                instruction: 'Pour remaining water in slow circles.',
+                                time: '1:00 - 2:00'
                             },
                             {
-                                instruction: 'Complete final pour and let coffee finish dripping.',
-                                time: '2:30 - 3:30'
+                                instruction: 'Let drip finish completely.',
+                                time: '2:00 - 3:00'
                             }
                         ],
                         tips: [
-                            'Use a medium-fine grind, similar to table salt',
-                            'Pour in slow, circular motions from center outward',
-                            'Maintain consistent water temperature throughout brewing'
+                            'Use medium-fine grind like table salt',
+                            'Pour in steady spirals from center out',
+                            'Keep water temperature consistent'
                         ]
                     },
                     {
                         id: 'cold-brew',
                         name: 'Cold brew',
-                        icon: '🧊',
                         description: 'Smooth concentrate with sweet notes',
-                        longDescription: 'Long extraction time creates a smooth, naturally sweet concentrate with low acidity.',
-                        time: '12-24 hours',
+                        longDescription: 'Long extraction creates naturally sweet concentrate with very low acidity.',
+                        time: '18 hours',
                         difficulty: 'Easy',
-                        yield: '4-6 cups',
-                        baseRatio: { coffee: 100, water: 1000 },
+                        yield: '4 cups concentrate',
+                        baseRatio: { coffee: 100, water: 600 },
                         equipment: [
-                            'Large jar or cold brew maker',
+                            'Large jar or container',
                             'Fine mesh strainer',
-                            'Cheesecloth or paper filter',
+                            'Paper filter',
                             'Digital scale',
                             'Grinder'
                         ],
                         steps: [
                             {
-                                instruction: 'Grind coffee coarsely and combine with room temperature water in jar.',
+                                instruction: 'Grind coffee very coarse like breadcrumbs.',
                                 time: '0:00 - 0:05'
                             },
                             {
-                                instruction: 'Stir well to ensure all grounds are saturated.',
+                                instruction: 'Mix coffee and room temperature water thoroughly.',
                                 time: '0:05 - 0:10'
                             },
                             {
-                                instruction: 'Cover and steep at room temperature for 12-24 hours.',
-                                time: '12-24 hours'
+                                instruction: 'Cover and steep at room temperature for 18 hours.',
+                                time: '18 hours'
                             },
                             {
-                                instruction: 'Strain through fine mesh and filter. Dilute concentrate 1:1 with water or milk.',
-                                time: '24:00 - 24:10'
+                                instruction: 'Strain twice and dilute 1:1 with water or milk.',
+                                time: '18:00 - 18:15'
                             }
                         ],
                         tips: [
-                            'Use very coarse grind to make straining easier',
-                            'Longer steeping time (18-24h) creates stronger concentrate',
-                            'Store concentrate in refrigerator for up to 2 weeks'
+                            'Use very coarse grind to prevent bitterness',
+                            '18 hours is the sweet spot for extraction',
+                            'Concentrate keeps 2 weeks refrigerated'
                         ]
                     },
                     {
                         id: 'kalita',
                         name: 'Kalita wave',
-                        icon: '🌊',
                         description: 'Balanced extraction with consistency',
-                        longDescription: 'The flat-bottom design provides even extraction and a well-balanced, forgiving cup.',
-                        time: '3-4 min',
+                        longDescription: 'Flat-bottom design provides even extraction and forgiving, balanced results.',
+                        time: '3 min',
                         difficulty: 'Easy',
-                        yield: '1-2 cups',
-                        baseRatio: { coffee: 22, water: 350 },
+                        yield: '1 cup (300ml)',
+                        baseRatio: { coffee: 20, water: 320 },
                         equipment: [
                             'Kalita Wave dripper',
                             'Kalita Wave filters',
@@ -565,38 +332,37 @@
                         ],
                         steps: [
                             {
-                                instruction: 'Place filter and rinse. Add coffee and level the bed.',
+                                instruction: 'Heat water to 92°C. Rinse filter and add coffee.',
                                 time: '0:00 - 0:30'
                             },
                             {
-                                instruction: 'Start timer, pour 3x coffee weight in center for bloom.',
-                                time: '0:00 - 0:15'
+                                instruction: 'Pour twice the coffee weight in center, wait 30 seconds.',
+                                time: '0:30 - 1:00'
                             },
                             {
-                                instruction: 'After 45 seconds, pour in 3-4 stages, keeping water level consistent.',
-                                time: '0:45 - 2:45'
+                                instruction: 'Pour remaining water in small center circles.',
+                                time: '1:00 - 2:00'
                             },
                             {
-                                instruction: 'Let coffee finish dripping.',
-                                time: '2:45 - 3:30'
+                                instruction: 'Let drip finish completely.',
+                                time: '2:00 - 3:00'
                             }
                         ],
                         tips: [
-                            'Use medium grind, similar to kosher salt',
-                            'Keep water level consistent during pours',
-                            'The flat bottom provides more even extraction than V60'
+                            'Use medium grind slightly coarser than V60',
+                            'Keep pours in the center for even extraction',
+                            'More forgiving than V60 due to flat bottom'
                         ]
                     },
                     {
                         id: 'french-press',
                         name: 'French press',
-                        icon: '☕',
                         description: 'Rich body with bold character',
-                        longDescription: 'Immersion brewing creates a full-bodied, rich cup with oils and fine particles.',
-                        time: '4-5 min',
+                        longDescription: 'Full-bodied coffee with oils and sediment for maximum flavor and richness.',
+                        time: '4 min',
                         difficulty: 'Easy',
-                        yield: '2-4 cups',
-                        baseRatio: { coffee: 30, water: 500 },
+                        yield: '2 cups (500ml)',
+                        baseRatio: { coffee: 35, water: 500 },
                         equipment: [
                             'French Press',
                             'Kettle',
@@ -607,26 +373,26 @@
                         ],
                         steps: [
                             {
-                                instruction: 'Preheat French Press with hot water, then empty and add coarse ground coffee.',
+                                instruction: 'Heat water to 94°C. Add coarse ground coffee to press.',
                                 time: '0:00 - 0:30'
                             },
                             {
-                                instruction: 'Start timer and pour hot water (96°C). Stir gently to saturate grounds.',
-                                time: '0:00 - 0:30'
+                                instruction: 'Pour all water and stir gently 3 times.',
+                                time: '0:30 - 1:00'
                             },
                             {
-                                instruction: 'Place lid on top but don\'t press. Steep for 4 minutes.',
-                                time: '0:30 - 4:30'
+                                instruction: 'Place lid on top and wait exactly 4 minutes.',
+                                time: '1:00 - 4:00'
                             },
                             {
-                                instruction: 'Press plunger down slowly and steadily for 20-30 seconds.',
-                                time: '4:30 - 5:00'
+                                instruction: 'Press down slowly and serve immediately.',
+                                time: '4:00 - 4:30'
                             }
                         ],
                         tips: [
-                            'Use coarse grind to prevent over-extraction',
-                            'Don\'t press too hard to avoid bitter flavors',
-                            'Serve immediately to prevent over-extraction'
+                            'Use coarse grind like breadcrumbs',
+                            'Time exactly 4 minutes to avoid bitterness',
+                            'Serve immediately or transfer to thermal carafe'
                         ]
                     }
                 ],
@@ -645,16 +411,13 @@
                 // Methods
                 selectMethod(method) {
                     this.selectedMethod = method;
-                    this.currentView = 'recipe';
-                    this.resetTimer();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    this.showRecipeDetailModal = true;
                 },
 
                 goHome() {
-                    this.currentView = 'home';
+                    this.showRecipeDetailModal = false;
                     this.selectedMethod = null;
                     this.resetTimer();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 },
 
                 adjustServings(delta) {
@@ -737,5 +500,251 @@
           );
         });
     </script>
+
+    <!-- Recipe Detail Modal (full-screen modal) -->
+    <div
+    x-show="showRecipeDetailModal"
+    class="fixed inset-0 z-50 overflow-y-auto bg-cream-25"
+    x-transition:enter="transition ease-out duration-500"
+    x-transition:enter-start="opacity-0 transform translate-y-4"
+    x-transition:enter-end="opacity-100 transform translate-y-0"
+    x-transition:leave="transition ease-in duration-300"
+    x-transition:leave-start="opacity-100 transform translate-y-0"
+    x-transition:leave-end="opacity-0 transform translate-y-4"
+>
+    <!-- Recipe Detail Content with Consistent Padding -->
+    <div class="px-4 md:px-[120px] py-8">
+        <div class="mx-auto max-w-4xl">
+            
+            <div class="">
+                <button
+                    @click="goHome()"
+                    class="group flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 font-medium
+                           text-cream-700 bg-white cursor-pointer
+                           shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]
+                           hover:text-cream-900 hover:-translate-y-1
+                           hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]
+                           focus:outline-none focus:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.25)]
+                           active:translate-y-0 active:text-cream-800">
+                    <svg 
+                        class="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-0.5 group-active:translate-x-0" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span>Back to Methods</span>
+                </button>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Recipe Detail Content -->
+        <div x-show="selectedMethod" class="mx-auto pb-8 bg-cream-25 max-w-4xl">
+            <!-- Recipe Header -->
+            <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
+                <div class="flex items-start gap-3 md:gap-4 mb-4 md:mb-6">
+                    <!-- Method Image -->
+                    <div class="flex-shrink-0 w-auto h-20 md:w-auto md:h-20 flex items-center justify-center">
+                        <img 
+                            :src="selectedMethod.id === 'cold-brew' ? 'assets/Coldbrew.png' : (selectedMethod.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + selectedMethod.id.replace('-', '').charAt(0).toUpperCase() + selectedMethod.id.replace('-', '').slice(1) + '.png')"
+                            :alt="selectedMethod?.name"
+                            class="w-full h-full object-contain rounded-xl"
+                        >
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h1 class="text-2xl md:text-3xl font-bold text-cream-950 mb-2" x-text="selectedMethod?.name"></h1>
+                        <p class="text-cream-700 text-base md:text-lg" x-text="selectedMethod?.longDescription"></p>
+                    </div>
+                </div>
+                
+                <!-- Recipe Stats -->
+                <div class="grid grid-cols-3 gap-3 md:gap-4 pt-4 md:pt-6 border-t border-cream-200">
+                    <div class="text-center">
+                        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.time"></div>
+                        <div class="text-xs md:text-sm text-cream-500">Brew Time</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.difficulty"></div>
+                        <div class="text-xs md:text-sm text-cream-500">Difficulty</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.yield"></div>
+                        <div class="text-xs md:text-sm text-cream-500">Serves</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Recipe Calculator -->
+            <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
+                <h2 class="text-lg md:text-xl font-semibold text-cream-900 mb-4 md:mb-6">Recipe Calculator</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+                    <!-- Serving Size Adjuster -->
+                    <div>
+                        <label class="block text-sm font-medium text-cream-800 mb-2 md:mb-3">Serving Size</label>
+                        <div class="flex items-center space-x-3 md:space-x-4">
+                            <button 
+                                @click="adjustServings(-1)"
+                                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-sm"
+                                :disabled="servings <= 1"
+                            >
+                                <span class="text-cream-700 font-bold">-</span>
+                            </button>
+                            <div class="text-center">
+                                <div class="text-xl md:text-2xl font-bold text-cream-900 transition-all duration-200" x-text="servings"></div>
+                                <div class="text-xs md:text-sm text-cream-600">cups</div>
+                            </div>
+                            <button 
+                                @click="adjustServings(1)"
+                                class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-cream-100 hover:bg-cream-200 flex items-center justify-center transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-sm"
+                                :disabled="servings >= 6"
+                            >
+                                <span class="text-cream-700 font-bold">+</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Coffee Strength -->
+                    <div>
+                        <label class="block text-sm font-medium text-cream-800 mb-2 md:mb-3">Coffee Strength</label>
+                        <div class="space-y-2">
+                            <input 
+                                type="range" 
+                                min="0.8" 
+                                max="1.2" 
+                                step="0.1" 
+                                x-model="strengthMultiplier"
+                                class="w-full h-2 bg-cream-200 rounded-lg appearance-none cursor-pointer transition-all duration-200"
+                            >
+                            <div class="flex justify-between text-xs text-cream-600">
+                                <span>Mild</span>
+                                <span>Medium</span>
+                                <span>Strong</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calculated Recipe -->
+                <div class="mt-6 md:mt-8 p-4 md:p-6 bg-cream-100 rounded-lg md:rounded-xl border border-cream-200 shadow-sm">
+                    <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">Your Recipe</h3>
+                    <div class="grid grid-cols-2 gap-3 md:gap-4">
+                        <div class="transition-all duration-300">
+                            <span class="text-cream-700">Coffee:</span>
+                            <span class="font-semibold text-cream-900 ml-2" x-text="calculatedCoffee + 'g'"></span>
+                        </div>
+                        <div class="transition-all duration-300">
+                            <span class="text-cream-700">Water:</span>
+                            <span class="font-semibold text-cream-900 ml-2" x-text="calculatedWater + 'ml'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Equipment & Ingredients -->
+            <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
+                <!-- Equipment -->
+                <div class="bg-white rounded-4xl p-4 md:p-6 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]">
+                    <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">Equipment Needed</h3>
+                    <ul class="space-y-2">
+                        <template x-for="item in selectedMethod?.equipment" :key="item">
+                            <li class="flex items-center space-x-3 transition-all duration-200 rounded-lg p-2 -m-2">
+                                <div class="w-2 h-2 bg-cream-500 rounded-full"></div>
+                                <span class="text-cream-800 text-sm md:text-base" x-text="item"></span>
+                            </li>
+                        </template>
+                    </ul>
+                </div>
+
+                <!-- Ingredients -->
+                <div class="bg-white rounded-4xl p-4 md:p-6 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]">
+                    <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">What You'll Need</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between transition-all duration-300">
+                            <span class="text-cream-700 text-sm md:text-base">Coffee:</span>
+                            <span class="font-semibold text-cream-900" x-text="calculatedCoffee + 'g'"></span>
+                        </div>
+                        <div class="flex justify-between transition-all duration-300">
+                            <span class="text-cream-700 text-sm md:text-base">Hot water (92-96°C)</span>
+                            <span class="font-semibold text-cream-900" x-text="calculatedWater + 'ml'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brewing Steps with Timer -->
+            <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
+                <div class="flex items-center justify-between mb-4 md:mb-6">
+                    <h3 class="text-lg md:text-xl font-semibold text-cream-900">Brewing Steps</h3>
+                    <button
+                        @click="toggleTimer()"
+                        class="px-3 md:px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-lg transition-all duration-200 font-medium hover:scale-105 active:scale-95 shadow-md active:shadow-sm text-sm md:text-base"
+                        x-text="timerActive ? 'Stop Timer' : 'Start Timer'"
+                    ></button>
+                </div>
+
+                <!-- Timer Display -->
+                <div
+                    x-show="timerActive"
+                    class="mb-4 md:mb-6 p-4 bg-cream-100 rounded-lg md:rounded-xl border border-cream-200 shadow-sm"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 transform scale-95"
+                    x-transition:enter-end="opacity-100 transform scale-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100 transform scale-100"
+                    x-transition:leave-end="opacity-0 transform scale-95"
+                >
+                    <div class="text-center">
+                        <div class="text-2xl md:text-3xl font-bold text-cream-900 mb-2 animate-pulse" x-text="formatTime(currentTime)"></div>
+                        <div class="text-cream-700 text-sm md:text-base" x-text="'Step ' + (currentStep + 1) + ' of ' + selectedMethod?.steps.length"></div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mt-3 md:mt-4 w-full bg-cream-200 rounded-full h-2">
+                        <div
+                            class="bg-cream-600 h-2 rounded-full transition-all duration-500 ease-out"
+                            :style="'width: ' + ((currentStep + 1) / selectedMethod?.steps.length * 100) + '%'"
+                        ></div>
+                    </div>
+                </div>
+
+                <!-- Steps List -->
+                <div class="space-y-3 md:space-y-4">
+                    <template x-for="(step, index) in selectedMethod?.steps" :key="index">
+                        <div
+                            class="flex space-x-3 md:space-x-4 p-3 md:p-4 rounded-lg md:rounded-xl transition-all duration-300"
+                            :class="timerActive && index === currentStep ? 'bg-cream-100 border border-cream-300 scale-105 shadow-sm' : 'bg-cream-25 hover:bg-cream-50'"
+                        >
+                            <div
+                                class="flex-shrink-0 w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center font-semibold transition-all duration-300 shadow-sm text-sm md:text-base"
+                                :class="timerActive && index <= currentStep ? 'bg-cream-600 text-cream-50 animate-pulse' : 'bg-cream-200 text-cream-800'"
+                                x-text="index + 1"
+                            ></div>
+                            <div class="flex-1">
+                                <p class="text-cream-900 text-sm md:text-base" x-text="step.instruction"></p>
+                                <p class="text-xs md:text-sm text-cream-600 mt-1" x-text="step.time"></p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Pro Tips -->
+            <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] 0">
+                <h3 class="font-semibold text-cream-900 mb-3 md:mb-4 flex items-center">
+                    <span class="text-lg md:text-xl mr-2 animate-bounce">💡</span>
+                    Pro Tips
+                </h3>
+                <div class="space-y-2 md:space-y-3">
+                    <template x-for="tip in selectedMethod?.tips" :key="tip">
+                        <p class="text-cream-800 text-sm md:text-base transition-all duration-200 hover:text-cream-900" x-text="tip"></p>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
