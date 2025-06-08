@@ -57,10 +57,10 @@
 
         <!-- Hero Section (only on home view) -->
         <div x-show="currentView === 'home'" class="text-center mb-16 px-4 animate-section" data-delay="0.2">
-            <h1 class="text-4xl md:text-5xl font-bold text-cream-900 mb-4 md:mb-5 leading-tight tracking-tight">
+            <h1 class="text-4xl md:text-6xl font-bold text-cream-900 mb-4 md:mb-5 leading-tight tracking-tight">
                 Perfect Coffee, <br class="md:hidden">Every Time
             </h1>
-            <div class="max-w-2xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <p class="text-lg md:text-xl text-cream-600 mb-2">
                     Quickly find any coffee recipe <br class="md:hidden">that you need to start this morning.
                 </p>
@@ -109,21 +109,26 @@
                     <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mx-auto">
                         <template x-for="method in brewingMethods" :key="method.id">
                             <div 
-                                @click="selectMethod(method)"
-                                class="flex items-center p-6 gap-4 group cursor-pointer bg-white rounded-4xl transition-all duration-300 hover:-translate-y-1 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]"
-                            >
-                                <!-- Method Icon -->
-                                <div class="flex w-9 h-16 group-hover:scale-110 transition-transform duration-300">
-                                    <img :src="method.id === 'cold-brew' ? 'assets/Coldbrew.png' : (method.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + method.id.replace('-', '').charAt(0).toUpperCase() + method.id.replace('-', '').slice(1) + '.png')" :alt="method.name" class="">
-                                </div>
-                                
-                                <!-- Method Info -->
-                                 <div
-                                 class="flex flex-col gap-1">
-                                    <h3 class="font-semibold text-lg md:text-xl text-cream-900" x-text="method.name"></h3>
-                                    <p class="text-cream-600 text-sm leading-relaxed" x-text="method.description"></p>
-                                 </div>
-                            </div>
+    @click="selectMethod(method)"
+    class="flex items-start p-4 md:p-6 gap-3 md:gap-4 group cursor-pointer bg-white rounded-4xl transition-all duration-300 hover:-translate-y-1 min-h-[4.5rem] md:min-h-0 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]"
+>
+    <!-- Smaller icon on mobile -->
+    <div class="flex w-8 h-12 md:w-9 md:h-16 group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+        <img 
+            :src="method.id === 'cold-brew' ? 'assets/Coldbrew.png' : (method.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + method.id.replace('-', '').charAt(0).toUpperCase() + method.id.replace('-', '').slice(1) + '.png')" 
+            :alt="method.name" 
+            class="w-full h-full object-contain"
+        >
+    </div>
+    
+    <div class="flex flex-col gap-0.5 md:gap-1 min-w-0 flex-1">
+        <!-- Slightly smaller title on mobile -->
+        <h3 class="font-semibold text-base md:text-xl text-cream-900" x-text="method.name"></h3>
+        <!-- Keep accessible text size -->
+        <p class="text-cream-600 text-sm leading-snug md:leading-relaxed" x-text="method.description"></p>
+    </div>
+</div>
+
                         </template>
                     </section>
                 </div>
