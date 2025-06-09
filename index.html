@@ -572,18 +572,18 @@
         <div x-show="selectedMethod" class="mx-auto pb-8 bg-cream-25 max-w-4xl">
             <!-- Recipe Header -->
             <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
-                <div class="flex items-start gap-3 md:gap-4 mb-4 md:mb-6">
+                <div class="flex items-start gap-2 md:gap-4 mb-4 md:mb-6">
                     <!-- Method Image -->
-                    <div class="flex-shrink-0 w-auto h-20 md:w-auto md:h-20 flex items-center justify-center">
+                    <div class="w-12 h-20 md:w-20 md:h-20 flex items-center justify-center">
                         <img 
                             :src="selectedMethod.id === 'cold-brew' ? 'assets/Coldbrew.png' : (selectedMethod.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + selectedMethod.id.replace('-', '').charAt(0).toUpperCase() + selectedMethod.id.replace('-', '').slice(1) + '.png')"
                             :alt="selectedMethod?.name"
                             class="w-full h-full object-contain rounded-xl"
                         >
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <h1 class="text-2xl md:text-3xl font-bold text-cream-950 mb-2" x-text="selectedMethod?.name"></h1>
-                        <p class="text-cream-700 text-base md:text-lg" x-text="selectedMethod?.longDescription"></p>
+                    <div class="flex-1 min-w-0 flex-grow">
+                        <h1 class="text-xl md:text-3xl font-bold text-cream-950 mb-1" x-text="selectedMethod?.name"></h1>
+                        <p class="text-sm md:text-lg text-cream-700" x-text="selectedMethod?.longDescription"></p>
                     </div>
                 </div>
                 
