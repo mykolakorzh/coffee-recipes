@@ -587,21 +587,26 @@
                     </div>
                 </div>
                 
-                <!-- Recipe Stats -->
-                <div class="grid grid-cols-3 gap-3 md:gap-4 pt-4 md:pt-6 border-t border-cream-200">
-                    <div class="text-center">
-                        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.time"></div>
-                        <div class="text-xs md:text-sm text-cream-500">Brew Time</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.difficulty"></div>
-                        <div class="text-xs md:text-sm text-cream-500">Difficulty</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.yield"></div>
-                        <div class="text-xs md:text-sm text-cream-500">Serves</div>
-                    </div>
-                </div>
+               <!-- Recipe Stats -->
+<div class="grid grid-cols-3 gap-3 md:gap-4 pt-4 md:pt-6 border-t border-cream-200">
+    <div class="text-center">
+        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.time"></div>
+        <div class="text-xs md:text-sm text-cream-500">Brew Time</div>
+    </div>
+    <div class="text-center">
+        <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.difficulty"></div>
+        <div class="text-xs md:text-sm text-cream-500">Difficulty</div>
+    </div>
+    <div class="text-center">
+        <!-- Show short version on mobile, full version on desktop -->
+        <div class="text-xl md:text-2xl font-bold text-cream-800">
+            <span class="md:hidden" x-text="selectedMethod?.yield.split(' (')[0]"></span>
+            <span class="hidden md:inline" x-text="selectedMethod?.yield"></span>
+        </div>
+        <div class="text-xs md:text-sm text-cream-500">Serves</div>
+    </div>
+</div>
+
             </div>
 
            <!-- Enhanced Recipe Calculator - Replace your existing calculator div -->
