@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
     <head>
+        <!-- Basic Meta Tags -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>BrewEasy - Perfect Coffee, Every Time</title>
+        
+        <!-- SEO Meta Tags -->
         <meta name="description" content="Discover the perfect coffee recipe for every morning. Explore methods from V60 to AeroPress and brew your ideal cup with BrewEasy.">
         <meta name="keywords" content="BrewEasy, coffee brewing, AeroPress, Chemex, Hario V60, Cold Brew, Kalita Wave, French Press, coffee recipes, brewing guide, coffee timer, perfect coffee">
         <meta name="author" content="Mykola">
         <meta name="robots" content="index, follow">
         
-        <!-- Canonical URL -->
+        <!-- Canonical URL to prevent duplicate content issues -->
         <link rel="canonical" href="https://breweasy.coffee">
         
-        <!-- Open Graph / Facebook -->
+        <!-- Open Graph / Facebook Meta Tags for social media sharing -->
         <meta property="og:type" content="website">
         <meta property="og:url" content="https://breweasy.coffee">
         <meta property="og:title" content="BrewEasy - Perfect Coffee, Every Time">
@@ -20,11 +23,11 @@
         <meta property="og:image" content="https://breweasy.coffee/assets/og-image.png">
         <meta property="og:site_name" content="BrewEasy">
         
-        <!-- Icons -->
+        <!-- Favicons and Touch Icons for various devices -->
         <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
         <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
         
-        <!-- Stylesheets -->
+        <!-- Stylesheets for Tailwind CSS and Google Fonts -->
         <link href="dist/output.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,32 +37,33 @@
 
 <body class="bg-cream-25 min-h-screen font-sans" x-data="coffeeApp()">
     
-    <!-- Main Content Container -->
+    <!-- Main application container with Alpine.js data initialization -->
     <main class="min-h-screen flex flex-col justify-between">
         
-        <!-- Header Section with Brand Info (always visible) -->
+        <!-- Header Section: Contains brand logo, author info, and is always visible -->
         <div class="relative animate-section" data-delay="1">
             <div class="max-w-6xl mx-auto md:px-8">
-                <!-- Brand Header -->
+                <!-- Brand Header Container -->
                 <div class="flex justify-center mb-16 pt-8">
+                    <!-- Brand Info Card (BrewEasy Logo & Author) -->
                     <div class="flex items-center space-x-3 md:space-x-4 bg-white backdrop-blur-sm rounded-full px-4 md:px-6 py-2 md:py-3 transition-all duration-300 hover:-translate-y-1 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]">
-                        <!-- Logo -->
+                        <!-- Logo Link -->
                          <a href="index.html">
                             <div
                          class="flex items-center justify-center gap-2">
                             <div class="size-6 md:size-8 flex items-center justify-center">
-                                <img src="assets/CoffeeLogo.png" alt="Logo">
+                                <img src="assets/CoffeeLogo.png" alt="BrewEasy Logo">
                             </div>
                             <span class="font-medium text-sm md:text-base text-cream-800">BrewEasy</span>
                          </div>
                          </a>
                          
-                        <!-- Divider -->
+                        <!-- Decorative Divider -->
                         <div class="w-px h-4 md:h-6 bg-cream-300"></div>
-                        <!-- Author Info -->
+                        <!-- Author Info Link -->
                          <a href="https://mykolakorzh.design/" target="_blank">
                             <div class="flex items-center gap-2">
-                                <img class="rounded-full size-6 md:size-8" src="assets/AuthorPhoto.png" alt="">
+                                <img class="rounded-full size-6 md:size-8" src="assets/AuthorPhoto.png" alt="Author Photo">
                                 <span class="text-cream-600 text-xs md:text-sm">By <span class="font-medium">Mykola</span></span>
                                 </div>
                          </a>
@@ -70,7 +74,7 @@
             </div>
         </div>
 
-        <!-- Hero Section (only on home view) -->
+        <!-- Hero Section: Displays a welcoming message and tagline, only visible on the home view -->
         <div x-show="currentView === 'home'" class="text-center mb-16 px-4 animate-section" data-delay="0.2">
             <h1 class="text-4xl md:text-6xl font-bold text-cream-900 mb-4 md:mb-5 leading-tight tracking-tight">
                 Perfect Coffee, <br class="md:hidden">Every Time
@@ -85,11 +89,11 @@
             </div>
         </div>
 
-        <!-- Main Content Area -->
+        <!-- Main Content Area: Contains the dynamic content based on the current view (home or recipe detail) -->
         <div>
             <div class="px-4 md:px-[120px]">
                 
-                <!-- Home View: Method Grid -->
+                <!-- Home View: Grid of Brewing Methods (e.g., AeroPress, Chemex) -->
                 <div 
                     x-show="currentView === 'home'" 
                     x-transition:enter="transition ease-out duration-500"
@@ -100,14 +104,16 @@
                     x-transition:leave-end="opacity-0"
                     class="animate-section" data-delay="0.4"
                 >
-                    <!-- Brewing Methods Grid - Responsive columns -->
+                    <!-- Brewing Methods Grid - Responsive columns setup -->
                     <section class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mx-auto">
+                        <!-- Loop through each brewing method to display its card -->
                         <template x-for="method in brewingMethods" :key="method.id">
+                            <!-- Individual Brewing Method Card -->
                             <div 
     @click="selectMethod(method)"
     class="flex items-center p-4 md:p-6 gap-3 md:gap-4 group cursor-pointer bg-white rounded-4xl md:h-fit transition-all duration-300 hover:-translate-y-1 min-h-[4.5rem] md:min-h-0 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] hover:shadow-[inset_0_-1.5px_2px_rgba(74,50,40,0.2),_inset_0_1.5px_2px_rgba(255,255,255,0.9),_0_0_0_2px_rgba(74,50,40,0.15)]"
 >
-    <!-- Smaller icon on mobile -->
+    <!-- Method Icon (dynamically loaded based on method ID) -->
     <div class="flex w-8 h-12 md:w-9 md:h-16 group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
         <img 
             :src="method.id === 'cold-brew' ? 'assets/Coldbrew.png' : (method.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + method.id.replace('-', '').charAt(0).toUpperCase() + method.id.replace('-', '').slice(1) + '.png')" 
@@ -116,10 +122,11 @@
         >
     </div>
     
+    <!-- Method Name and Description -->
     <div class="flex flex-col gap-0.5 md:gap-1 min-w-0 flex-1">
-        <!-- Slightly smaller title on mobile -->
+        <!-- Method Title (responsive font size) -->
         <h3 class="font-semibold text-base md:text-xl text-cream-900" x-text="method.name"></h3>
-        <!-- Keep accessible text size -->
+        <!-- Method Description (accessible text size) -->
         <p class="text-cream-600 text-sm leading-snug md:leading-relaxed" x-text="method.description"></p>
     </div>
 </div>
@@ -130,14 +137,14 @@
             </div>
         </div>
 
-       <!-- Footer -->
+       <!-- Footer Section: Contains copyright information and is always visible -->
         <footer class="w-full text-center pt-16 pb-8 px-4 md:px-[120px] animate-section" data-delay="1.0">
-            <!-- Full-width divider -->
+            <!-- Full-width divider for visual separation -->
             <div class="w-full h-px bg-cream-200">
                 <div class="max-w-4xl mx-auto h-full"></div>
             </div>
             
-            <!-- Footer content -->
+            <!-- Footer Content Area -->
             <div>
                 <div class="max-w-4xl mx-auto pt-4 md:pt-8">
                     <p class="text-cream-600 text-sm md:text-base">Made with coffee and love</p>
@@ -147,34 +154,38 @@
 
     </main>
 
+    <!-- Alpine.js CDN for interactive functionality -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Main Alpine.js Application Logic -->
     <script>
-        // Alpine.js main application logic
+        // Defines the main Alpine.js data and methods for the coffee brewing app
         function coffeeApp() {
             return {
-                // Application state
-                currentView: 'home',
-                selectedMethod: null,
-                servings: 1,
-                strengthMultiplier: 1.0, // This will now be perfectly centered
-                timerActive: false,
-                currentTime: 0,
-                currentStep: 0,
-                timerInterval: null,
-                showRecipeDetailModal: false,
+                // --- Application State Management ---
+                currentView: 'home', // 'home' or 'recipeDetail' to control visible sections
+                selectedMethod: null, // Stores the currently selected brewing method object
+                servings: 1, // Number of servings for recipe calculation
+                strengthMultiplier: 1.0, // Adjusts coffee strength (centered at 1.0)
+                timerActive: false, // Controls the brewing timer's active state
+                currentTime: 0, // Current time in seconds for the timer
+                currentStep: 0, // Current step index in the brewing process
+                timerInterval: null, // Stores the interval ID for the timer
+                showRecipeDetailModal: false, // Controls visibility of the recipe detail modal
 
-                // Brewing methods data
+                // --- Brewing Methods Data ---
+                // Array containing details for each coffee brewing method
                 brewingMethods: [
                     {
                         id: 'aeropress',
                         name: 'AeroPress',
-                        description: 'Full-bodied with low acidity profile',
-                        longDescription: 'Creates a smooth, rich cup with less bitterness than other methods.',
-                        time: '2 min',
+                        description: 'Full-bodied with low acidity profile', // Short description for method card
+                        longDescription: 'Creates a smooth, rich cup with less bitterness than other methods.', // Detailed description for recipe modal
+                        time: '2 min', // Total brewing time
                         difficulty: 'Easy',
-                        yield: '1 cup (240ml)',
-                        baseRatio: { coffee: 17, water: 240 },
-                        equipment: [
+                        yield: '1 cup (240ml)', // Expected yield
+                        baseRatio: { coffee: 17, water: 240 }, // Base coffee to water ratio in grams/ml
+                        equipment: [ // List of equipment needed
                             'AeroPress brewer',
                             'AeroPress paper filters',
                             'Stirring paddle',
@@ -182,10 +193,10 @@
                             'Grinder',
                             'Timer'
                         ],
-                        steps: [
+                        steps: [ // Detailed brewing steps with timings
                             {
                                 instruction: 'Heat water to 88°C. Rinse filter and assemble AeroPress.',
-                                time: '0:00 - 0:30'
+                                time: '0:00 - 0:30' // Time range for this step
                             },
                             {
                                 instruction: 'Add coffee, pour all water, and stir 3 times.',
@@ -200,7 +211,7 @@
                                 time: '1:30 - 2:00'
                             }
                         ],
-                        tips: [
+                        tips: [ // Pro tips for this method
                             'Use medium grind like table salt',
                             'Press slowly and steadily',
                             'Clean taste with full body'
@@ -412,21 +423,24 @@
                     }
                 ],
 
-                // Computed properties
+                // --- Computed Properties for dynamic recipe calculations ---
                 get calculatedCoffee() {
                     if (!this.selectedMethod) return 0;
+                    // Calculates coffee amount based on base ratio, servings, and strength multiplier
                     return Math.round(this.selectedMethod.baseRatio.coffee * this.servings * this.strengthMultiplier);
                 },
 
                 get calculatedWater() {
                     if (!this.selectedMethod) return 0;
+                    // Calculates water amount based on base ratio and servings
                     return Math.round(this.selectedMethod.baseRatio.water * this.servings);
                 },
 
-                // Methods
+                // --- Methods: Functions to interact with the application state ---
                 selectMethod(method) {
                     this.selectedMethod = method;
                     this.showRecipeDetailModal = true;
+                    // Manually inject a page view for the selected method to Vercel Analytics
                     inject({ page: `/recipe/${method.id}` });
                 },
 
@@ -434,17 +448,20 @@
                     this.showRecipeDetailModal = false;
                     this.selectedMethod = null;
                     this.resetTimer();
+                    // Manually inject a page view for the home page to Vercel Analytics
                     inject({ page: '/' });
                 },
 
                 adjustServings(delta) {
                     const newServings = this.servings + delta;
+                    // Ensures servings stay within a valid range (1 to 6)
                     if (newServings >= 1 && newServings <= 6) {
                         this.servings = newServings;
                     }
                 },
 
                 toggleTimer() {
+                    // Toggles the timer's active state (start/stop)
                     if (this.timerActive) {
                         this.stopTimer();
                     } else {
@@ -457,6 +474,7 @@
                     this.currentTime = 0;
                     this.currentStep = 0;
                     
+                    // Sets up an interval to update the timer every second
                     this.timerInterval = setInterval(() => {
                         this.currentTime++;
                         this.updateCurrentStep();
@@ -465,6 +483,7 @@
 
                 stopTimer() {
                     this.timerActive = false;
+                    // Clears the timer interval if it's active
                     if (this.timerInterval) {
                         clearInterval(this.timerInterval);
                         this.timerInterval = null;
@@ -472,6 +491,7 @@
                 },
 
                 resetTimer() {
+                    // Resets the timer and current step to initial values
                     this.stopTimer();
                     this.currentTime = 0;
                     this.currentStep = 0;
@@ -480,30 +500,30 @@
                 updateCurrentStep() {
                     if (!this.selectedMethod) return;
                     
-                    // Parse step timings from your recipe data
+                    // Parses step timings from the recipe data to determine current step
                     const stepTimings = this.selectedMethod.steps.map(step => {
-                        // Extract end time from "0:00 - 0:30" format
                         const timeMatch = step.time.match(/(\d+):(\d+)$/);
                         if (timeMatch) {
                             return parseInt(timeMatch[1]) * 60 + parseInt(timeMatch[2]);
                         }
-                        return 60; // fallback
+                        return 60; // Fallback value if time format is unexpected
                     });
                     
-                    // Find current step based on actual timing
+                    // Finds the current step based on the elapsed time
                     let newStep = 0;
                     for (let i = 0; i < stepTimings.length; i++) {
                         if (this.currentTime <= stepTimings[i]) {
                             newStep = i;
                             break;
                         }
-                        newStep = stepTimings.length - 1; // last step
+                        newStep = stepTimings.length - 1; // Ensures the last step is shown if time exceeds it
                     }
                     
                     this.currentStep = newStep;
                 },
 
                 formatTime(seconds) {
+                    // Formats seconds into a M:SS string (e.g., 2:05)
                     const mins = Math.floor(seconds / 60);
                     const secs = seconds % 60;
                     return `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -512,7 +532,7 @@
                 getProgressPercentage() {
                     if (!this.selectedMethod || !this.timerActive) return 0;
                     
-                    // Get total recipe time from the last step
+                    // Calculates the progress percentage for the timer bar
                     const lastStep = this.selectedMethod.steps[this.selectedMethod.steps.length - 1];
                     const totalTimeMatch = lastStep.time.match(/(\d+):(\d+)$/);
                     
@@ -526,21 +546,29 @@
                 },
 
                 init() {
+                    // Alpine.js initialization hook: scrolls to top and logs to console
                     window.scrollTo({ top: 0, behavior: 'instant' });
                     console.log('Figma-matched Coffee App initialized! ☕');
+                    // Ensures initial page view is tracked by Vercel Analytics
                     inject();
                 }
             }
         }
     </script>
+    
+    <!-- Motion.js CDN and animation script for smooth transitions -->
     <script type="module">
-        import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
+        // Imports animation libraries
+        import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
+        // Vercel Speed Insights and Analytics imports for performance monitoring
         import { injectSpeedInsights } from "@vercel/speed-insights";
         import { inject } from "@vercel/analytics";
 
+        // Initializes Vercel Speed Insights and Analytics
         injectSpeedInsights();
         inject();
 
+        // Applies animation to elements with 'animate-section' class on load
         document.querySelectorAll('.animate-section').forEach((element, index) => {
           const delay = parseFloat(element.dataset.delay || 0);
 
@@ -552,7 +580,7 @@
         });
     </script>
 
-    <!-- Recipe Detail Modal (full-screen modal) -->
+    <!-- Recipe Detail Modal (full-screen overlay for displaying individual recipe details) -->
     <div
     x-show="showRecipeDetailModal"
     class="fixed inset-0 z-50 overflow-y-auto bg-cream-25 px-4"
@@ -563,10 +591,11 @@
     x-transition:leave-start="opacity-100 transform scale-100 translate-y-0"
     x-transition:leave-end="opacity-0 transform scale-98 translate-y-1"
 >
-    <!-- Recipe Detail Content with Consistent Padding -->
+    <!-- Recipe Detail Content Wrapper with Consistent Padding -->
     <div class="px-4 md:px-[120px] py-8">
         <div class="mx-auto max-w-4xl">
             
+            <!-- Back to Methods Button -->
             <div class="">
                 <button
                     @click="goHome()"
@@ -591,12 +620,12 @@
 </div>
 
 
-        <!-- Recipe Detail Content -->
+        <!-- Recipe Detail Content (visible when a method is selected) -->
         <div x-show="selectedMethod" class="mx-auto pb-8 bg-cream-25 max-w-4xl">
-            <!-- Recipe Header -->
+            <!-- Recipe Header: Displays method image, name, and long description -->
             <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
                 <div class="flex items-start gap-2 md:gap-4 mb-4 md:mb-6">
-                    <!-- Method Image -->
+                    <!-- Method Image (dynamically loaded) -->
                     <div class="w-12 h-20 md:w-20 md:h-20 flex items-center justify-center">
                         <img 
                             :src="selectedMethod.id === 'cold-brew' ? 'assets/Coldbrew.png' : (selectedMethod.id === 'french-press' ? 'assets/Frenchpress.png' : 'assets/' + selectedMethod.id.replace('-', '').charAt(0).toUpperCase() + selectedMethod.id.replace('-', '').slice(1) + '.png')"
@@ -610,7 +639,7 @@
                     </div>
                 </div>
                 
-               <!-- Recipe Stats -->
+               <!-- Recipe Stats: Displays key information like brew time, difficulty, and yield -->
 <div class="grid grid-cols-3 gap-3 md:gap-4 pt-4 md:pt-6 border-t border-cream-200">
     <div class="text-center">
         <div class="text-xl md:text-2xl font-bold text-cream-800" x-text="selectedMethod?.time"></div>
@@ -621,7 +650,7 @@
         <div class="text-xs md:text-sm text-cream-500">Difficulty</div>
     </div>
     <div class="text-center">
-        <!-- Show short version on mobile, full version on desktop -->
+        <!-- Display short yield on mobile, full yield on desktop -->
         <div class="text-xl md:text-2xl font-bold text-cream-800">
             <span class="md:hidden" x-text="selectedMethod?.yield.split(' (')[0]"></span>
             <span class="hidden md:inline" x-text="selectedMethod?.yield"></span>
@@ -632,15 +661,16 @@
 
             </div>
 
-           <!-- Enhanced Recipe Calculator - Replace your existing calculator div -->
+           <!-- Recipe Calculator: Allows users to adjust servings and strength, showing calculated coffee and water amounts -->
 <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
     <h2 class="text-lg md:text-xl font-semibold text-cream-900 mb-4 md:mb-6">Recipe Calculator</h2>
     
     <div class="grid md:grid-cols-2 gap-6 md:gap-8">
-        <!-- Enhanced Serving Size -->
+        <!-- Serving Size Adjustment Controls -->
         <div>
             <label class="block text-sm font-medium text-cream-800 mb-2 md:mb-3">Serving Size</label>
             <div class="flex items-center space-x-3 md:space-x-4">
+                <!-- Decrease Servings Button -->
                 <button 
                     @click="adjustServings(-1)"
                     class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-cream-100 hover:bg-cream-200 transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0
@@ -653,12 +683,13 @@
                     <span class="text-cream-700 font-bold">-</span>
                 </button>
                 
-                <!-- Enhanced serving display -->
+                <!-- Current Serving Display -->
                 <div class="text-center rounded-xl px-4 py-2 min-w-[70px]">
                     <div class="text-xl md:text-2xl font-bold text-cream-900 transition-all duration-200" x-text="servings"></div>
                     <div class="text-xs md:text-sm text-cream-600">cups</div>
                 </div>
                 
+                <!-- Increase Servings Button -->
                 <button 
                     @click="adjustServings(1)"
                     class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-cream-100 hover:bg-cream-200 transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0
@@ -673,7 +704,7 @@
             </div>
         </div>
 
-        <!-- Keep Coffee Strength exactly as it is -->
+        <!-- Coffee Strength Slider -->
         <div>
             <label class="block text-sm font-medium text-cream-800 mb-3">Coffee Strength</label>
             <div class="space-y-3">
@@ -687,6 +718,7 @@
                         class="coffee-strength-slider w-full h-2 bg-cream-200 rounded-full appearance-none cursor-pointer transition-all duration-200"
                     >
                 </div>
+                <!-- Strength labels -->
                 <div class="flex justify-between text-xs text-cream-600 px-1">
                     <span>Mild</span>
                     <span>Medium</span>
@@ -696,16 +728,16 @@
         </div>
     </div>
 
-    <!-- Enhanced Recipe Results -->
+    <!-- Calculated Recipe Results (Coffee and Water amounts) -->
     <div class="mt-6 md:mt-8 p-4 md:p-6 bg-gradient-to-r from-cream-50 to-cream-100 rounded-2xl border border-cream-200 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]
     ">
         <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">Your Recipe</h3>
         <div class="grid grid-cols-2 gap-3 md:gap-4">
-            <div class="transition-all duration-300">
+            <div>
                 <span class="text-cream-700">Coffee:</span>
                 <span class="font-semibold text-cream-900 ml-2" x-text="calculatedCoffee + 'g'"></span>
             </div>
-            <div class="transition-all duration-300">
+            <div>
                 <span class="text-cream-700">Water:</span>
                 <span class="font-semibold text-cream-900 ml-2" x-text="calculatedWater + 'ml'"></span>
             </div>
@@ -714,10 +746,9 @@
 </div>
 
 
-
-            <!-- Enhanced Equipment & Ingredients - Replace your existing grid -->
+            <!-- Equipment & Ingredients Section -->
 <div class="grid md:grid-cols-2 gap-4 md:gap-6 mb-6 md:mb-8">
-    <!-- Enhanced Equipment -->
+    <!-- Equipment Needed List -->
     <div class="bg-white rounded-4xl p-4 md:p-6 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]">
         <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">Equipment Needed</h3>
         <ul class="space-y-2">
@@ -730,7 +761,7 @@
         </ul>
     </div>
 
-    <!-- Enhanced Ingredients -->
+    <!-- Ingredients List -->
     <div class="bg-white rounded-4xl p-4 md:p-6 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]">
         <h3 class="font-semibold text-cream-900 mb-3 md:mb-4">What You'll Need</h3>
         <div class="space-y-3">
@@ -747,10 +778,11 @@
 </div>
 
 
-           <!-- Enhanced Brewing Steps with Proper Timing -->
+           <!-- Brewing Steps Section: Outlines the step-by-step brewing process with an integrated timer -->
 <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] mb-6 md:mb-8">
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 md:mb-6">
         <h3 class="text-lg md:text-xl font-semibold text-cream-900 mb-3 md:mb-0">Brewing Steps</h3>
+        <!-- Timer Start/Stop Button (desktop only) -->
         <button
             @click="toggleTimer()"
             class="hidden md:block px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-xl transition-all duration-200 font-medium hover:-translate-y-0.5 active:translate-y-0 text-sm md:text-base cursor-pointer
@@ -762,7 +794,7 @@
 
     </div>
 
-    <!-- Timer Display (same as before) -->
+    <!-- Timer Display Section (visible when timer is active) -->
     <div
         x-show="timerActive"
         class="mb-4 md:mb-6 p-4 bg-gradient-to-r from-cream-100 to-cream-50 rounded-xl border border-cream-200"
@@ -773,32 +805,37 @@
         x-transition:leave-start="opacity-100 transform scale-100"
         x-transition:leave-end="opacity-0 transform scale-95"
     >
+        <!-- Current Timer Time and Step Indicator -->
         <div class="text-center mb-4">
             <div class="text-2xl md:text-3xl font-bold text-cream-900 mb-2 animate-pulse" x-text="formatTime(currentTime)"></div>
             <div class="text-cream-700 text-sm md:text-base" x-text="'Step ' + (currentStep + 1) + ' of ' + selectedMethod?.steps.length"></div>
         </div>
 
+        <!-- Progress Bar for Timer -->
         <div class="w-full bg-cream-200 rounded-full h-2">
             <div
                 class="bg-cream-600 h-2 rounded-full transition-all duration-1000 ease-out"
-                :style="'width: ' + getProgressPercentage() + '%'"
-            ></div>
+                :style="'width: ' + getProgressPercentage() + '%'">
+            </div>
         </div>
         
     </div>
 
-    <!-- Steps List with Proper Timing Highlights -->
+    <!-- Steps List: Detailed instructions for each brewing step -->
     <div class="space-y-3 md:space-y-4">
         <template x-for="(step, index) in selectedMethod?.steps" :key="index">
+            <!-- Individual Step Card -->
             <div
                 class="flex space-x-3 md:space-x-4 p-3 md:p-4 rounded-2xl transition-all duration-300"
-                :class="timerActive && index &lt;= currentStep ? 'bg-cream-100 border border-cream-300 scale-[1.01]' : 'bg-cream-25'"
+                :class="timerActive && index <= currentStep ? 'bg-cream-100 border border-cream-300 scale-[1.01]' : 'bg-cream-25'"
             >
+                <!-- Step Number Indicator -->
                 <div
                     class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 text-sm md:text-base shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)]"
-                    :class="timerActive && index &lt;= currentStep ? 'bg-cream-600 text-cream-50 animate-pulse' : 'bg-cream-200 text-cream-800'"
+                    :class="timerActive && index <= currentStep ? 'bg-cream-600 text-cream-50 animate-pulse' : 'bg-cream-200 text-cream-800'"
                     x-text="index + 1"
                 ></div>
+                <!-- Step Instruction and Timing -->
                 <div class="flex-1">
                     <p class="text-cream-900 text-sm md:text-base font-medium mb-1" x-text="step.instruction"></p>
                     <p class="text-xs md:text-sm text-cream-600" x-text="step.time"></p>
@@ -807,6 +844,7 @@
         </template>
     </div>
 
+    <!-- Timer Start/Stop Button (mobile only) -->
     <button
         @click="toggleTimer()"
         class="md:hidden px-4 py-2 bg-cream-600 hover:bg-cream-700 text-cream-50 rounded-xl transition-all duration-200 font-medium hover:-translate-y-0.5 active:translate-y-0 text-sm md:text-base cursor-pointer
@@ -820,7 +858,7 @@
 
 
 
-            <!-- Pro Tips -->
+            <!-- Pro Tips Section: Provides additional advice for brewing -->
             <div class="bg-white rounded-4xl p-6 md:p-8 shadow-[inset_0_-1.5px_1px_rgba(74,50,40,0.1),_inset_0_1.5px_1px_rgba(255,255,255,0.75),_0_0_0_1px_rgba(74,50,40,0.07)] 0">
                 <h3 class="font-semibold text-cream-900 mb-3 md:mb-4 flex items-center">
                     <span class="text-lg md:text-xl mr-2 animate-bounce">💡</span>
