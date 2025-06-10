@@ -533,8 +533,10 @@
     <script type="module">
         import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
         import { injectSpeedInsights } from "@vercel/speed-insights";
+        import { inject } from "@vercel/analytics";
 
         injectSpeedInsights();
+        inject();
 
         document.querySelectorAll('.animate-section').forEach((element, index) => {
           const delay = parseFloat(element.dataset.delay || 0);

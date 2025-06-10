@@ -6,6 +6,7 @@
     "build": "npx tailwindcss -i ./input.css -o ./dist/output.css"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0"
   }
 }
