@@ -427,12 +427,14 @@
                 selectMethod(method) {
                     this.selectedMethod = method;
                     this.showRecipeDetailModal = true;
+                    inject({ page: `/recipe/${method.id}` });
                 },
 
                 goHome() {
                     this.showRecipeDetailModal = false;
                     this.selectedMethod = null;
                     this.resetTimer();
+                    inject({ page: '/' });
                 },
 
                 adjustServings(delta) {
@@ -526,6 +528,7 @@
                 init() {
                     window.scrollTo({ top: 0, behavior: 'instant' });
                     console.log('Figma-matched Coffee App initialized! ☕');
+                    inject();
                 }
             }
         }
