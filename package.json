@@ -4,5 +4,8 @@
   },
   "scripts": {
     "build": "npx tailwindcss -i ./input.css -o ./dist/output.css"
+  },
+  "dependencies": {
+    "@vercel/speed-insights": "^1.2.0"
   }
 }
